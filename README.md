@@ -1,4 +1,4 @@
-# _ICU Game Dev Soc Project Repository_
+# **ICU Game Dev Soc Project Repository**
 # Title: Raineri’s Constant
 
 ## For the Gameplay Programmers
@@ -10,12 +10,12 @@ When making a contribution to the project please create your own branch listing 
 
 Comment your code wherever possible and please use meaningful variable names that follow the convention that I've put in place
 > Class names - CamelCaps
-> Variable Identifiers - camelCaps
+Variable Identifiers - camelCaps
 
 ## GamePlay Reminder
 >  Society: The game will be set up as a society, which will initially be run autonomously by NPCs who can be replaced by players.
-> Time Travel: Events will be set up allowing players to go back to when decisions were made and will be given an option to alter history in order to gain access to an alternate reality. Each reality iteration deviates from the next through decisions made in particular events.
-> Massively multiplayer: Players or different abilities and game progress will interact with each other.
+Time Travel: Events will be set up allowing players to go back to when decisions were made and will be given an option to alter history in order to gain access to an alternate reality. Each reality iteration deviates from the next through decisions made in particular events.
+Massively multiplayer: Players or different abilities and game progress will interact with each other.
 
 ## For the Network Programmers
 ...coming soon...
