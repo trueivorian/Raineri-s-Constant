@@ -12,4 +12,6 @@ public class Consumable : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    
 }
