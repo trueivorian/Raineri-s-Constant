@@ -1,15 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class farmerBot : MonoBehaviour {
+public class FarmerBot : Character {
 
-	// Use this for initialization
-	void Start () {
+    private FarmerBot famerBotInstance;
+
+    // Use this for initialization
+    void Awake () {
+        if (famerBotInstance == null) {
+            famerBotInstance = this;
+        }
+
+        this.health = new Health(100.0f);
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    public FarmerBot getFarmerBotInstance () {
+        return this.famerBotInstance;
+    }
+
 }

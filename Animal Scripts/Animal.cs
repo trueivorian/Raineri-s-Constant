@@ -1,15 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public abstract class Animal : MonoBehaviour {
+public abstract class Animal : MonoBehaviour, IAttackable {
 
-	// Use this for initialization
-	void Start () {
+	protected Health health;
 
+	public Health getHealth() {
+		return health;
 	}
 
-	// Update is called once per frame
-	void Update () {
-
+	public void attack (IAttackable victim){        
+	    victim.getHealth ().modifyStatus (30.0f);
 	}
+
+    public float calculateDamage () {
+        return 1.0f;
+    }
 }

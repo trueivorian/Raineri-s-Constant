@@ -36,7 +36,7 @@ public class Player : Character {
 		this.currentDirection = NE;	
 
 	}
-		
+
 	// Update is called once per frame
 	void Update	() {
 		if (Input.GetKeyDown ("up") || Input.GetKeyDown ("down") || Input.GetKeyDown ("left") || Input.GetKeyDown ("right")) {
@@ -177,6 +177,13 @@ public class Player : Character {
 
 		Debug.Log ("Moving " + (180.0f * direction) / Mathf.PI + " degrees");
 
+	}
+
+	void onTriggerEnter2D(Collider2D target){
+		if (target.tag == "pig") {
+			GameObject pig = GameObject.FindGameObjectWithTag ("pig");
+			this.attack (pig.GetComponent<Pig>().getPigInstance());
+		}
 	}
 
 }
