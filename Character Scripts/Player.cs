@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
 public class Player : Character {
 
@@ -52,7 +51,7 @@ public class Player : Character {
 		}
 	}
 
-	public override void changeDirection(){
+	public void changeDirection(){
 
 		if (Input.GetKeyDown ("up")) {
 			anim.SetBool ("upPressed", true);
@@ -158,7 +157,7 @@ public class Player : Character {
 
 	}
 
-	public override void move(float direction){
+	public void move(float direction){
 
 		Vector3 moveVector = new Vector3 (playerSpeed*Mathf.Cos(direction), playerSpeed*Mathf.Sin(direction), 0);
 
@@ -180,15 +179,4 @@ public class Player : Character {
 
 	}
 
-    public override void takeDamage (float damageValue) {
-        throw new NotImplementedException();
-    }
-
-    public override void jump () {
-        throw new NotImplementedException();
-    }
-
-    public override void die () {
-        throw new NotImplementedException();
-    }
 }
