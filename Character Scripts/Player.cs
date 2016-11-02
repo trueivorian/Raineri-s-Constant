@@ -136,11 +136,12 @@ public class Player : Character {
 	}
 
 	// Called when a GameObject enters the player's collider space
-	private void onTriggerEnter2D(Collider2D target){
+	private void OnTriggerEnter2D(Collider2D target){
 		
-		if (target.tag == "pig") {
-			GameObject pig = GameObject.FindGameObjectWithTag ("pig");
+		if (target.tag == "Pig") {
+			GameObject pig = GameObject.FindGameObjectWithTag ("Pig");
 			this.attack (pig.GetComponent<Pig>().getPigInstance());
+			// Debug.Log (pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
 		}
 
 	}
