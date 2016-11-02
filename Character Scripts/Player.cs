@@ -146,4 +146,12 @@ public class Player : Character {
 
 	}
 
+    public void examine(IInteractive target) {
+        InteractionController.startDescription(this, target);
+    }
+
+    public void interact(IInteractive target) {
+        InteractionController.startInteraction(this, target);
+    }
+
 }
