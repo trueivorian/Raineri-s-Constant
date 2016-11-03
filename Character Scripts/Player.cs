@@ -146,10 +146,12 @@ public class Player : Character {
 
 	}
 
+    //Logic: player close to target => player press button => calls examine(target)
     public void examine(IInteractive target) {
         InteractionController.startDescription(this, target);
     }
 
+    //Logic: player close to target => player press button => calls interact(target)
     public void interact(IInteractive target) {
         InteractionController.startInteraction(this, target);
     }
