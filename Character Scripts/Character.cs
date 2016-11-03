@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class Character : MonoBehaviour, IAttackable, IInteractive {
+public abstract class Character : MonoBehaviour, IAttackable {
 
 	protected Rigidbody2D myBody;
 	protected Animator anim;
@@ -26,13 +26,4 @@ public abstract class Character : MonoBehaviour, IAttackable, IInteractive {
         return 1.0f;
     }
 
-    //TODO: implement dialogue
-    public string getDialogue () {
-        return "dialogue";
-    }
-
-    //TODO: implement description
-    public string getDescription () {
-        return "description";
-    }
 }
