@@ -1,22 +1,47 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
-public static class InteractionController {
+// Code Source: http://stackoverflow.com/questions/10717344/c-sharp-creating-function-queue
+public class QueueController : MonoBehaviour {
 
-    public static void startInteraction (Player player, IInteractive target) {
-        //TODO: Add environmental switch case factors for starting of different sets of dialogues.
-        int tempEnvSwitch = 1;
-        switch (tempEnvSwitch) {
-            case 1:
-                target.getDialogues().ForEach(delegate (string dialogue){
-                    //TODO: Add implementation of dialogues with Unity.
-                    Debug.Log("To be implemented.");
-                });
-                break;
-        }
-    }
+	private Queue jobQueue;
+	private bool isWorking;
 
-    public static void startDescription (Player player, IInteractive target) {
-        //TODO: Add implementation of description with Unity.
-    }
+	private void Update(){
+		if (isWorking) {
+			doJob ();
+		}
+	}
+
+	public bool isJobless{
+		get{
+			if (jobQueue.Count == 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	public bool contains(Action job){
+		if (jobQueue.Contains (job)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Action doJob(){
+		return jobQueue.Dequeue () as Action;
+	}
+
+	public void addJob(Action<string, bool> job){
+		jobQueue.Enqueue (job);
+	}
+
+	public void setIsWorking(bool _isWorking){
+		this.isWorking = _isWorking;
+	}
 }
