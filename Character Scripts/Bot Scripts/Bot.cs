@@ -1,15 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class Bot : MonoBehaviour {
+//Only Bots are interactable with players
+public abstract class Bot : Character, IInteractive {
+    protected string description;
+    protected List<string> dialogue;
+   
+    public List<string> getDialogues () {
+        return this.dialogue;
+    }
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public string getDescription () {
+        return this.description;
+    }
+
+    public abstract void initializeDialogue (List<string> _dialogue);
 }
