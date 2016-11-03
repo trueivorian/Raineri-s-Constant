@@ -29,7 +29,7 @@ public class Player : Character {
         this.moveError = 0.2f;
         this.moveTime = 0.0f;
         this.isMoving = false;
-        this.currentDirection = RainerisConstants.E;
+        this.currentDirection = Direction.E;
         this.playerSpeed = 5.0f;
         this.playerMoveDistance = 5.0f;
 
@@ -74,7 +74,7 @@ public class Player : Character {
 
         if (Input.GetKeyDown("up")) {
             anim.SetBool("upPressed", true);
-            this.currentDirection = RainerisConstants.N;
+            this.currentDirection = Direction.N;
         }
 
         if (Input.GetKeyUp("up")) {
@@ -83,7 +83,7 @@ public class Player : Character {
 
         if (Input.GetKeyDown("down")) {
             anim.SetBool("downPressed", true);
-            this.currentDirection = RainerisConstants.S;
+            this.currentDirection = Direction.S;
         }
 
         if (Input.GetKeyUp("down")) {
@@ -92,7 +92,7 @@ public class Player : Character {
 
         if (Input.GetKeyDown("left")) {
             anim.SetBool("leftPressed", true);
-            this.currentDirection = RainerisConstants.W;
+            this.currentDirection = Direction.W;
         }
 
         if (Input.GetKeyUp("left")) {
@@ -101,7 +101,7 @@ public class Player : Character {
 
         if (Input.GetKeyDown("right")) {
             anim.SetBool("rightPressed", true);
-            this.currentDirection = RainerisConstants.E;
+            this.currentDirection = Direction.E;
         }
 
         if (Input.GetKeyUp("right")) {
