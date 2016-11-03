@@ -1,11 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public abstract class Character : MonoBehaviour, IAttackable {
+public abstract class Character : MonoBehaviour, IAttackable, IInteractive {
 
 	protected Rigidbody2D myBody;
 	protected Animator anim;
-	//protected BoxCollider2D boxCollider;
 	protected Health health;
 
 	// Update is called once per frame
@@ -26,4 +26,13 @@ public abstract class Character : MonoBehaviour, IAttackable {
         return 1.0f;
     }
 
+    //TODO: implement dialogue
+    public string getDialogue () {
+        return "dialogue";
+    }
+
+    //TODO: implement description
+    public string getDescription () {
+        return "description";
+    }
 }
