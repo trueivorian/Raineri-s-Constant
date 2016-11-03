@@ -3,155 +3,155 @@ using System.Collections;
 
 public class Player : Character {
 
-	// Public reference to the player instance
-	public static Player instance;
+    // Public reference to the player instance
+    public static Player instance;
 
-	// Player movement parameters
-	private float playerSpeed;
-	private float playerMoveDistance;
-	private float moveError;
-	private float moveTime;
-	private bool isMoving;
-	private float currentDirection;
+    // Player movement parameters
+    private float playerSpeed;
+    private float playerMoveDistance;
+    private float moveError;
+    private float moveTime;
+    private bool isMoving;
+    private float currentDirection;
 
-	// Called on script instance creation
-	private void Awake(){
+    // Called on script instance creation
+    private void Awake () {
 
-		// Assign the current instance of the script to this variable if one hasn't been created
-		if (instance == null) {
-			instance = this;
-		}
+        // Assign the current instance of the script to this variable if one hasn't been created
+        if (instance == null) {
+            instance = this;
+        }
 
-		// Initialise player components
-		this.anim = this.GetComponent<Animator> ();
-		//this.animState = this.GetComponent<Animation> ();
-		this.myBody = this.GetComponent<Rigidbody2D> ();
-		this.moveError = 0.2f;
-		this.moveTime = 0.0f;
-		this.isMoving = false;
-		this.currentDirection = Direction.E;
-		this.playerSpeed = 5.0f;
-		this.playerMoveDistance = 5.0f;
+        // Initialise player components
+        this.anim = this.GetComponent<Animator>();
+        //this.animState = this.GetComponent<Animation> ();
+        this.myBody = this.GetComponent<Rigidbody2D>();
+        this.moveError = 0.2f;
+        this.moveTime = 0.0f;
+        this.isMoving = false;
+        this.currentDirection = RainerisConstants.E;
+        this.playerSpeed = 5.0f;
+        this.playerMoveDistance = 5.0f;
 
-	}
+    }
 
-	// Update is called once per frame
-	private void Update	() {
+    // Update is called once per frame
+    private void Update () {
 
-		// Only this function needs to be called by the player as the animator in Unity calls the movePlayer() function
-		chooseDirection(); 
+        move();
 
-	}
+    }
 
-	private void FixedUpdate(){
+    private void FixedUpdate () {
 
-	}
+    }
 
-	// Translate the player in a specific direction
-	private void move(){
-		
-//		moveStart ();
-//
-		chooseDirection ();
-//
-//		moving (currentDirection);
+    // Translate the player in a specific direction
+    private void move () {
 
-	}
+        //		moveStart ();
+        //
+        chooseDirection();
+        //
+        //		moving (currentDirection);
 
-	// Set the isMoving variable to true if an arrow key is pressed
-	private void moveStart(){
-		
-		if (Input.GetKeyDown ("up") || Input.GetKeyDown ("down") || Input.GetKeyDown ("left") || Input.GetKeyDown ("right")) {
-			isMoving = true;
-		}
+    }
 
-	}
+    // Set the isMoving variable to true if an arrow key is pressed
+    private void moveStart () {
 
-	/*
+        if (Input.GetKeyDown("up") || Input.GetKeyDown("down") || Input.GetKeyDown("left") || Input.GetKeyDown("right")) {
+            isMoving = true;
+        }
+
+    }
+
+    /*
 	 * Assign the currentDirection variable with one of the constant values if the arrow keys are pressed and change the 
 	 * Mechanim state machine variables created in Unity 
 	 */
-	private void chooseDirection(){
+    private void chooseDirection () {
 
-		if (Input.GetKeyDown ("up")) {
-			anim.SetBool ("upPressed", true);
-			this.currentDirection = Direction.N;
-		}
+        if (Input.GetKeyDown("up")) {
+            anim.SetBool("upPressed", true);
+            this.currentDirection = RainerisConstants.N;
+        }
 
-		if (Input.GetKeyUp ("up")) {
-			anim.SetBool ("upPressed", false);
-		}
+        if (Input.GetKeyUp("up")) {
+            anim.SetBool("upPressed", false);
+        }
 
-		if (Input.GetKeyDown ("down")) {
-			anim.SetBool ("downPressed", true);
-			this.currentDirection = Direction.S;
-		}
+        if (Input.GetKeyDown("down")) {
+            anim.SetBool("downPressed", true);
+            this.currentDirection = RainerisConstants.S;
+        }
 
-		if (Input.GetKeyUp ("down")) {
-			anim.SetBool ("downPressed", false);
-		}
+        if (Input.GetKeyUp("down")) {
+            anim.SetBool("downPressed", false);
+        }
 
-		if (Input.GetKeyDown ("left")) {
-			anim.SetBool ("leftPressed", true);
-			this.currentDirection = Direction.W;
-		}
+        if (Input.GetKeyDown("left")) {
+            anim.SetBool("leftPressed", true);
+            this.currentDirection = RainerisConstants.W;
+        }
 
-		if (Input.GetKeyUp ("left")) {
-			anim.SetBool ("leftPressed", false);
-		}
+        if (Input.GetKeyUp("left")) {
+            anim.SetBool("leftPressed", false);
+        }
 
-		if (Input.GetKeyDown ("right")) {
-			anim.SetBool ("rightPressed", true);
-			this.currentDirection = Direction.E;
-		}
+        if (Input.GetKeyDown("right")) {
+            anim.SetBool("rightPressed", true);
+            this.currentDirection = RainerisConstants.E;
+        }
 
-		if (Input.GetKeyUp ("right")) {
-			anim.SetBool ("rightPressed", false);
-		}
+        if (Input.GetKeyUp("right")) {
+            anim.SetBool("rightPressed", false);
+        }
 
-	}
+    }
 
-	// Move the player object
-	public void movePlayer(float speed, float direction){
-		
-		Vector3 moveVector = new Vector2 (speed * Mathf.Cos (direction), speed * Mathf.Sin (direction));
+    // Move the player object until they reach the playerMoveDistance
+    public void movePlayer (float direction) {
 
-		this.myBody.velocity = new Vector2 (moveVector.x, moveVector.y);
-	}
+        Vector3 moveVector = new Vector2(playerSpeed * Mathf.Cos(direction), playerSpeed * Mathf.Sin(direction));
 
-	// Move the player object
-	public void movePlayer(float direction){
-		movePlayer (playerSpeed, direction);
-	}
+        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
 
-	public void stopPlayer(){
-		movePlayer (0.0f, currentDirection);
-	}
+        //Debug.Log ("Moving " + (180.0f * direction) / Mathf.PI + " degrees");
 
-	public float getCurrentDirection(){
-		return currentDirection;
-	}
+    }
 
-	// Called when a GameObject enters the player's collider space
-	private void OnTriggerEnter2D(Collider2D target){
-		
-		if (target.tag == "Pig") {
-			GameObject pig = GameObject.FindGameObjectWithTag ("Pig");
-			this.attack (pig.GetComponent<Pig>().getPigInstance());
-			// Debug.Log (pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
-		}
+    // Move the player object by a specified speed until they reach the playerMoveDistance
+    public void movePlayer (float speed, float direction) {
 
-	}
+        Vector3 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
 
-    //Logic: player close to target => player press button => calls examine(target)
-    public void examine(IInteractive target) {
+        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
+    }
+
+    public float getCurrentDirection () {
+
+        return currentDirection;
+
+    }
+
+    // Called when a GameObject enters the player's collider space
+    private void OnTriggerEnter2D (Collider2D target) {
+
+        if (target.tag == "Pig") {
+            GameObject pig = GameObject.FindGameObjectWithTag("Pig");
+            this.attack(pig.GetComponent<Pig>().getPigInstance());
+            // Debug.Log (pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
+        }
+
+    }
+
+    public void examine (IInteractive target) {
         InteractionController.startDescription(this, target);
     }
 
-    //Logic: player close to target => player press button => calls interact(target)
-    public void interact(IInteractive target) {
+    public void interact (IInteractive target) {
         InteractionController.startInteraction(this, target);
     }
-
 
 }
