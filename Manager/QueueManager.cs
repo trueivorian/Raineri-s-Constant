@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 // Code Source: http://stackoverflow.com/questions/10717344/c-sharp-creating-function-queue
-public class QueueController : MonoBehaviour {
+public class QueueManager : MonoBehaviour {
 
 	private Queue jobQueue;
 	private bool isWorking;

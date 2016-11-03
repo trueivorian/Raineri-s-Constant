@@ -7,7 +7,7 @@ public abstract class Animal : MonoBehaviour, IAttackable {
 	protected Rigidbody2D myBody;
 	protected Animator anim;
 	protected Health health;
-	//protected QueueManager animalTaskManager;
+	protected QueueManager animalTaskManager;
 
 	public Health getHealth() {
 		return health;
