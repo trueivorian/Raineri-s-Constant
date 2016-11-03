@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+//test
 public abstract class Animal : MonoBehaviour, IAttackable {
 
 	protected Rigidbody2D myBody;
