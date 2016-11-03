@@ -129,6 +129,10 @@ public class Player : Character {
         this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
     }
 
+    public void stopPlayer () {
+        movePlayer(0.0f, currentDirection);
+    }
+
     public float getCurrentDirection () {
 
         return currentDirection;
