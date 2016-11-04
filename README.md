@@ -15,6 +15,17 @@ Comment your code wherever possible and please use meaningful variable names tha
 
 > Variable Identifiers - camelCaps
 
+**Github Convention:**
+As part of version control, we will be implementing this github convention so as to ensure everything stays smooth.
+
+The ```master``` branch will only contain **workable** set of codes for a certain version of Unity. We will implement the version control in the future with tags, but currently, it will remain as it is.
+
+The ```devel``` branch will contain all merges from working branches of developers. This branch contain codes that might not work as it implements the various features coded by developers.
+
+Every individual coders will develop and use their own set of branch, primarily using the convention ```feat/{feature}``` to mark the feature they are working on. For instance, if I am working on the QueueManager feature, I will use ```feat/QueueManager``` branch to commit my changes. Once the feature is completed, I will pull a request to merge it with the ```devel```  branch. 
+
+Currently, all pull requests require **reviews** by at least an approver, before the feature is merged into the branch. Do shout out on Slack when you have pulled a request in case the approvers did not see the requests in time.
+
 ## GamePlay Reminder
 >  Society: The game will be set up as a society, which will initially be run autonomously by NPCs who can be replaced by players.
 
