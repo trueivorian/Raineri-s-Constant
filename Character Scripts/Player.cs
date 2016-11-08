@@ -74,7 +74,6 @@ public class Player : Character {
 
         if (Input.GetKeyDown("up")) {
             anim.SetBool("upPressed", true);
-            this.currentDirection = Direction.N;
         }
 
         if (Input.GetKeyUp("up")) {
@@ -83,7 +82,6 @@ public class Player : Character {
 
         if (Input.GetKeyDown("down")) {
             anim.SetBool("downPressed", true);
-            this.currentDirection = Direction.S;
         }
 
         if (Input.GetKeyUp("down")) {
@@ -92,7 +90,6 @@ public class Player : Character {
 
         if (Input.GetKeyDown("left")) {
             anim.SetBool("leftPressed", true);
-            this.currentDirection = Direction.W;
         }
 
         if (Input.GetKeyUp("left")) {
@@ -101,7 +98,6 @@ public class Player : Character {
 
         if (Input.GetKeyDown("right")) {
             anim.SetBool("rightPressed", true);
-            this.currentDirection = Direction.E;
         }
 
         if (Input.GetKeyUp("right")) {
@@ -110,18 +106,7 @@ public class Player : Character {
 
     }
 
-    // Move the player object until they reach the playerMoveDistance
-    public void movePlayer (float direction) {
-
-        Vector3 moveVector = new Vector2(playerSpeed * Mathf.Cos(direction), playerSpeed * Mathf.Sin(direction));
-
-        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
-
-        //Debug.Log ("Moving " + (180.0f * direction) / Mathf.PI + " degrees");
-
-    }
-
-    // Move the player object by a specified speed until they reach the playerMoveDistance
+    // Move the player object
     public void movePlayer (float speed, float direction) {
 
         Vector3 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
@@ -129,14 +114,17 @@ public class Player : Character {
         this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
     }
 
+    // Move the player object
+    public void movePlayer (float direction) {
+        movePlayer(playerSpeed, direction);
+    }
+
     public void stopPlayer () {
         movePlayer(0.0f, currentDirection);
     }
 
     public float getCurrentDirection () {
-
         return currentDirection;
-
     }
 
     // Called when a GameObject enters the player's collider space
@@ -147,7 +135,6 @@ public class Player : Character {
             this.attack(pig.GetComponent<Pig>().getPigInstance());
             // Debug.Log (pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
         }
-
     }
 
     public void examine (IInteractive target) {
@@ -157,5 +144,4 @@ public class Player : Character {
     public void interact (IInteractive target) {
         InteractionController.startInteraction(this, target);
     }
-
 }

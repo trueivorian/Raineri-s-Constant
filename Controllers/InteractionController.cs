@@ -8,10 +8,10 @@ public static class InteractionController {
         int tempEnvSwitch = 1;
         switch (tempEnvSwitch) {
             case 1:
-                target.getDialogues().ForEach(delegate (string dialogue){
+                /*target.getDialogues().ForEach(delegate (string dialogue){
                     //TODO: Add implementation of dialogues with Unity.
                     Debug.Log("To be implemented.");
-                });
+                });*/
                 break;
         }
     }
