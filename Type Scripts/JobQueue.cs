@@ -4,13 +4,18 @@ using System.Collections;
 using System.Collections.Generic;
 
 // Code Source: http://stackoverflow.com/questions/10717344/c-sharp-creating-function-queue
-public class JobQueue : MonoBehaviour {
+public class JobQueue {
     private Queue jobQueue;
     private bool isWorking;
 
-    private void Update () {
-        if (isWorking) {
-            doJob();
+    public JobQueue () {
+        this.jobQueue = new Queue();
+        this.isWorking = false;
+    }
+
+    public void work () {
+        if (this.isWorking) {
+            this.doJob();
         }
     }
 
@@ -33,10 +38,11 @@ public class JobQueue : MonoBehaviour {
     }
 
     public Action doJob () {
+        Debug.Log("Working");
         return jobQueue.Dequeue() as Action;
     }
 
-    public void addJob (Action<string, bool> job) {
+    public void addJob (Action job) {
         jobQueue.Enqueue(job);
     }
 
