@@ -7,13 +7,13 @@ public abstract class Animal : MonoBehaviour, IAttackable {
 	protected Rigidbody2D myBody;
 	protected Animator anim;
 	protected Health health;
-	protected QueueManager animalTaskManager;
+	protected JobQueue animalJobQueue;
 
 	public Health getHealth() {
 		return health;
 	}
 
-	public void attack (IAttackable victim){        
+	public void attack (IAttackable victim){
 	    victim.getHealth ().modifyStatus (30.0f);
 	}
 

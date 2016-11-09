@@ -1,4 +1,4 @@
-# **ICU Game Dev Soc Project Repository**
+﻿# **ICU Game Dev Soc Project Repository**
 # Title: Raineri’s Constant
 
 ## For the Gameplay Programmers
@@ -35,5 +35,3 @@ Currently, all pull requests require **reviews** by at least an approver, before
 
 ## For the Network Programmers
 ...coming soon...
-
-
