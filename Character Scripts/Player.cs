@@ -14,6 +14,9 @@ public class Player : Character {
     private bool isMoving;
     private float currentDirection;
 
+    // For interactionController. Currently for pig only
+    private bool isTouchingPig;
+
     // Called on script instance creation
     private void Awake () {
 
@@ -35,6 +38,7 @@ public class Player : Character {
         Debug.Log("Screen Width: " + Screen.currentResolution.width);
         Debug.Log("Screen Height: " + Screen.currentResolution.height);
 
+        this.isTouchingPig = false;
     }
 
     // Update is called once per frame
@@ -42,6 +46,12 @@ public class Player : Character {
 
         // This determines the direction the player faces
         chooseDirection();
+
+        if (isTouchingPig) {
+            if (Input.GetKeyDown(KeyCode.X)) {
+                this.examine(GameObject.FindGameObjectWithTag("Pig").GetComponent<Pig>().getPigInstance());
+            }
+        }
     }
 
     private void FixedUpdate () {
@@ -115,11 +125,15 @@ public class Player : Character {
             GameObject pig = GameObject.FindGameObjectWithTag("Pig");
             this.attack(pig.GetComponent<Pig>().getPigInstance());
             //Debug.Log(pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
+
+            this.isTouchingPig = true;
         }
     }
 
-    public void OnTriggerEnter (Collider target) {
-        if (target.tag == "Pig" && )
+    private void OnTriggerExit2D (Collider2D target) {
+        if (target.tag == "Pig") {
+            this.isTouchingPig = false;
+        }
     }
 
     public void interact (IInteractive target) {
