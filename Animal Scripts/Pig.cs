@@ -32,14 +32,14 @@ public class Pig : Animal {
 
 		for (int i = 0; i < 50; i++) {
 			this.animalJobQueue.addJob (() => {
-				this.anim.SetBool ("upPressed", false);
+				this.anim.SetBool("upPressed", false);
+
 				this.anim.SetBool ("downPressed", true);
 			});
 		}
 
-		this.animalJobQueue.addJob (() => {
-			this.anim.SetBool ("downPressed", false);
-		});
+		this.animalJobQueue.addJob(() => {this.anim.SetBool("downPressed", false);});
+
 	}
 
 	// Update is called once per frame
@@ -71,7 +71,7 @@ public class Pig : Animal {
 
 	public float getCurrentDirection (){
 		return currentDirection;
-	}
 
-
+	}    
 }
+

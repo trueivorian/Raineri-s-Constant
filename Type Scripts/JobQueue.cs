@@ -51,3 +51,4 @@ public class JobQueue {
 		this.isWorking = _isWorking;
 	}
 }
+
