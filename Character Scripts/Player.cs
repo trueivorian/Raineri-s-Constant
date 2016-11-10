@@ -118,10 +118,6 @@ public class Player : Character {
         }
     }
 
-    public void OnTriggerEnter (Collider target) {
-        if (target.tag == "Pig" && )
-    }
-
     public void interact (IInteractive target) {
         InteractionController.startInteraction(this, target);
     }
