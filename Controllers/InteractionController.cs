@@ -17,6 +17,7 @@ public static class InteractionController {
     }
 
     public static void startDescription (Player player, IInteractive target) {
+        Debug.Log(target.getDescription());
         //TODO: Add implementation of description with Unity.
     }
 }
