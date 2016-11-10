@@ -42,7 +42,6 @@ public class Player : Character {
 
         // This determines the direction the player faces
         chooseDirection();
-        
     }
 
     private void FixedUpdate () {
@@ -112,19 +111,15 @@ public class Player : Character {
 
     // Called when a GameObject enters the player's collider space
     private void OnTriggerEnter2D (Collider2D target) {
-
         if (target.tag == "Pig") {
             GameObject pig = GameObject.FindGameObjectWithTag("Pig");
             this.attack(pig.GetComponent<Pig>().getPigInstance());
             //Debug.Log(pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
         }
+    }
 
-        //TODO: Add farmer with FarmerBot tag
-        if (target.tag == "Pig" && Input.GetKeyDown(KeyCode.X)) {
-            GameObject pig = GameObject.FindGameObjectWithTag("Pig");
-            this.examine(pig.GetComponent<Pig>().getPigInstance());
-        }
-
+    public void OnTriggerEnter (Collider target) {
+        if (target.tag == "Pig" && )
     }
 
     public void interact (IInteractive target) {

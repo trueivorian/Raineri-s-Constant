@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NPCBehaviourManager : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+public class NPCBehaviourManager {
+    //This will be used to implement bot behaviour similar to human behaviour.
+    
+    /**
+     * Variables needed:
+     * radius movement
+     */
 }
