@@ -8,7 +8,6 @@ public class Pig : Animal {
 	private Pig pigInstance;
 	private float pigSpeed;
 	private float currentDirection;
-	//private delegate void job();
 
 	// Use this for initialization
 	void Awake () {
@@ -25,19 +24,26 @@ public class Pig : Animal {
 		this.currentDirection = Direction.E;
 		this.animalJobQueue.setIsWorking(true);
 
-		// Attempt to simulate 4 up button presses
-		this.animalJobQueue.addJob (delegate() {this.anim.SetBool ("upPressed", true);});
-		this.animalJobQueue.addJob (delegate() {this.anim.SetBool ("upPressed", true);});
-		this.animalJobQueue.addJob (delegate() {this.anim.SetBool ("upPressed", true);});
-		this.animalJobQueue.addJob (delegate() {this.anim.SetBool ("upPressed", true);});
+		for (int i = 0; i < 50; i++) {
+			this.animalJobQueue.addJob (() => {
+				this.anim.SetBool ("upPressed", true);
+			});
+		}
+
+		for (int i = 0; i < 50; i++) {
+			this.animalJobQueue.addJob (() => {
+				this.anim.SetBool("upPressed", false);
+				this.anim.SetBool ("downPressed", true);
+			});
+		}
+
+		this.animalJobQueue.addJob(() => {this.anim.SetBool("downPressed", false);});
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		// TODO: Invoking methods from a queue
-		//pigInstance.anim.SetBool ("upPressed", true);
-		this.animalJobQueue.addJob (delegate() {pigInstance.anim.SetBool ("upPressed", true);});
 		this.animalJobQueue.work ();
 	}
 
@@ -64,7 +70,5 @@ public class Pig : Animal {
 
 	public float getCurrentDirection(){
 		return currentDirection;
-	}
-
-    
+	}    
 }

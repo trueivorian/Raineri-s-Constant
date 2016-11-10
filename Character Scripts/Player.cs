@@ -40,7 +40,7 @@ public class Player : Character {
 	// Update is called once per frame
 	private void Update	() {
 
-		// Only this function needs to be called by the player as the animator in Unity calls the movePlayer() function
+		// This determines the direction the player faces
 		chooseDirection(); 
 
 	}
