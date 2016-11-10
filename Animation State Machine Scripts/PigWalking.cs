@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class pigWalking : StateMachineBehaviour {
+public class PigWalking : StateMachineBehaviour {
 
 	private Pig pigInstance;
 
