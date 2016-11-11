@@ -24,7 +24,10 @@ public class Pig : Animal {
 		this.currentDirection = Direction.E;
 		this.animalJobQueue.setIsWorking(true);
 
-		for (int i = 0; i < 50; i++) {
+        this.description = "This is a pig.";
+        this.dialogue = new List<string>();
+
+        for (int i = 0; i < 50; i++) {
 			this.animalJobQueue.addJob (() => {
 				this.anim.SetBool ("upPressed", true);
 			});
@@ -70,5 +73,11 @@ public class Pig : Animal {
 
 	public float getCurrentDirection(){
 		return currentDirection;
-	}    
+	}
+
+    public override void initializeDialogue (List<string> _dialogue) {
+        _dialogue.Add("Hello...");
+        _dialogue.Add("You can call be pig Sty...");
+        _dialogue.Add("I am a very boring pig who eats all day long...");
+    }
 }
