@@ -36,7 +36,6 @@ public class JobQueue {
 	}
 
 	public void doJob(){
-		Debug.Log ("Working");
 		if (!this.isJobless ()) {
 			(jobQueue.Dequeue ()) ();
 		} else {
@@ -52,3 +51,4 @@ public class JobQueue {
 		this.isWorking = _isWorking;
 	}
 }
+
