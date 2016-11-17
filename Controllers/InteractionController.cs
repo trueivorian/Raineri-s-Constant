@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public static class InteractionController {
-
     public static void startInteraction (Player player, IInteractive target) {
         //TODO: Add environmental switch case factors for starting of different sets of dialogues.
         int tempEnvSwitch = 1;
@@ -17,6 +16,8 @@ public static class InteractionController {
     }
 
     public static void startDescription (Player player, IInteractive target) {
+        Debug.Log(target.getDescription());
+
         //TODO: Add implementation of description with Unity.
     }
 }

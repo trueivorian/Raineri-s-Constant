@@ -2,6 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 
+/**
+ * Inherits from Bot
+ * 
+ * string getDescription()
+ * List<string> getDialogues()
+ */
 public class FarmerBot : Bot {
 
     private FarmerBot famerBotInstance;
@@ -13,6 +19,7 @@ public class FarmerBot : Bot {
             famerBotInstance = this;
         }
 
+        this.myBody = this.GetComponent<Rigidbody2D>();
         this.health = new Health(100.0f);
         //TODO: Add some better description for the bot.
         this.description = "This is a farmer.";
