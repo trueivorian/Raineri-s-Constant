@@ -13,6 +13,9 @@ public class FarmerBot : Bot {
     private FarmerBot famerBotInstance;
     private float farmerSpeed;
 
+    // Temp variable 
+    private bool action;
+
     // Use this for initialization
     void Awake () {
         if (famerBotInstance == null) {
@@ -26,18 +29,26 @@ public class FarmerBot : Bot {
         this.dialogue = new List<string>();
         this.initializeDialogue(dialogue);
         this.farmerSpeed = 5.0f;
+        this.botJobQueue = new JobQueue();
     }
 
     // Update is called once per frame
     void Update () {
-	
-	}
+
+        if (botJobQueue.isJobless()) {
+            //NPCBehaviourManager.randomizer();
+
+        } else {
+            botJobQueue.work();
+        }
+
+    }
 
     public FarmerBot getFarmerBotInstance () {
         return this.famerBotInstance;
     }
 
-    public override void initializeDialogue(List<string> _dialogue) {
+    public override void initializeDialogue (List<string> _dialogue) {
         _dialogue.Add("Hello...");
         _dialogue.Add("You can call be farmer Bill...");
         _dialogue.Add("I am a very boring farmer who tills the farm all day long...");

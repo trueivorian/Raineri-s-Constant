@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public abstract class Bot : Character, IInteractive {
     protected string description;
     protected List<string> dialogue;
-   
+    protected JobQueue botJobQueue;
     public List<string> getDialogues () {
         return this.dialogue;
     }

@@ -8,6 +8,7 @@ public class Pig : Animal {
     private Pig pigInstance;
     private float pigSpeed;
     private float currentDirection;
+    private bool action;
 
     [SerializeField]
     private GameObject rawPorkObject;
@@ -29,7 +30,6 @@ public class Pig : Animal {
 
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
-
         for (int i = 0; i < 50; i++) {
 
             this.animalJobQueue.addJob(() => {
@@ -63,7 +63,25 @@ public class Pig : Animal {
     void Update () {
 
         // TODO: Invoking methods from a queue
-        this.animalJobQueue.work();
+        
+        if (animalJobQueue.isJobless()) {
+            for (int i = 0; i < 50; i++) {
+                this.animalJobQueue.addJob(() => {
+                    this.anim.SetBool("upPressed", true);
+                });
+            }
+
+            for (int i = 0; i < 50; i++) {
+                this.animalJobQueue.addJob(() => {
+                    this.anim.SetBool("upPressed", false);
+                    this.anim.SetBool("downPressed", true);
+                });
+            }
+            this.animalJobQueue.addJob(() => { this.anim.SetBool("downPressed", false); });
+
+        } else {
+            this.animalJobQueue.work();
+        }
         checkDeath();
     }
 
