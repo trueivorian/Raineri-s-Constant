@@ -135,7 +135,6 @@ public class Player : Character {
             this.isTouchingPig = false;
         }
     }
->>>>>>> devel
 
     public void interact (IInteractive target) {
         InteractionController.startInteraction(this, target);
