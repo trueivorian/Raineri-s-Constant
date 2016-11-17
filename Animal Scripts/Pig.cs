@@ -3,12 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Pig : Animal {
+public class Pig : Animal, IMoveable {
 
     private Pig pigInstance;
     private float pigSpeed;
     private float currentDirection;
-    private bool action;
+    private IEnumerator coroutine;
 
     [SerializeField]
     private GameObject rawPorkObject;
@@ -18,10 +18,10 @@ public class Pig : Animal {
         if (pigInstance == null) {
             pigInstance = this;
         }
-
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
         this.animalJobQueue = new JobQueue();
+        this.npcBehaviourManager = new NPCBehaviourManager();
 
         this.health = new Health(100.0f);
         this.pigSpeed = 5.0f;
@@ -30,22 +30,32 @@ public class Pig : Animal {
 
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
+        /*
         for (int i = 0; i < 50; i++) {
 
             this.animalJobQueue.addJob(() => {
                 this.anim.SetBool("upPressed", true);
             });
         }
-
         for (int i = 0; i < 50; i++) {
             this.animalJobQueue.addJob(() => {
                 this.anim.SetBool("upPressed", false);
                 this.anim.SetBool("downPressed", true);
             });
         }
+        this.animalJobQueue.addJob(() => { this.anim.SetBool("downPressed", false); });*/
 
-        this.animalJobQueue.addJob(() => { this.anim.SetBool("downPressed", false); });
+    }
 
+    // Update is called once per frame
+    void Update () {
+        // TODO: Invoking methods from a queue
+        if (animalJobQueue.isJobless()) {
+            this.npcBehaviourManager.wander(this.pigInstance, this.animalJobQueue);
+        } else {
+            this.animalJobQueue.work();
+        }
+        checkDeath();
     }
 
     public void checkDeath () {
@@ -59,36 +69,9 @@ public class Pig : Animal {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-
-        // TODO: Invoking methods from a queue
-        
-        if (animalJobQueue.isJobless()) {
-            for (int i = 0; i < 50; i++) {
-                this.animalJobQueue.addJob(() => {
-                    this.anim.SetBool("upPressed", true);
-                });
-            }
-
-            for (int i = 0; i < 50; i++) {
-                this.animalJobQueue.addJob(() => {
-                    this.anim.SetBool("upPressed", false);
-                    this.anim.SetBool("downPressed", true);
-                });
-            }
-            this.animalJobQueue.addJob(() => { this.anim.SetBool("downPressed", false); });
-
-        } else {
-            this.animalJobQueue.work();
-        }
-        checkDeath();
-    }
-
     public Pig getPigInstance () {
         return this.pigInstance;
     }
-
 
     // Move the pig object
     public void movePig (float speed, float direction) {

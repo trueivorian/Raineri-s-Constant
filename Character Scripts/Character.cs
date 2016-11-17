@@ -26,4 +26,7 @@ public abstract class Character : MonoBehaviour, IAttackable {
         return 1.0f;
     }
 
+    public Animator getAnimator () {
+        return this.anim;
+    }
 }

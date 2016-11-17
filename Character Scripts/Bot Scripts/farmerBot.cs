@@ -8,13 +8,10 @@ using System.Collections.Generic;
  * string getDescription()
  * List<string> getDialogues()
  */
-public class FarmerBot : Bot {
+public class FarmerBot : Bot, IMoveable {
 
     private FarmerBot famerBotInstance;
     private float farmerSpeed;
-
-    // Temp variable 
-    private bool action;
 
     // Use this for initialization
     void Awake () {
@@ -36,7 +33,7 @@ public class FarmerBot : Bot {
     void Update () {
 
         if (botJobQueue.isJobless()) {
-            //NPCBehaviourManager.randomizer();
+            
 
         } else {
             botJobQueue.work();
