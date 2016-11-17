@@ -20,7 +20,6 @@ public class FarmerBot : Bot {
         }
 
         this.myBody = this.GetComponent<Rigidbody2D>();
-
         this.health = new Health(100.0f);
         //TODO: Add some better description for the bot.
         this.description = "This is a farmer.";

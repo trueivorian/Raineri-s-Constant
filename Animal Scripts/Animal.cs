@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-//test
+
 public abstract class Animal : MonoBehaviour, IAttackable, IInteractive {
 
     protected Rigidbody2D myBody;
@@ -10,8 +10,6 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive {
     protected JobQueue animalJobQueue;
     protected string description;
     protected List<string> dialogue;
-
-
 
     public Health getHealth () {
         return health;
