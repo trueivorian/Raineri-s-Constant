@@ -9,7 +9,7 @@ public class Pig : Animal, IMoveable {
     private float pigSpeed;
     private float currentDirection;
     private IEnumerator coroutine;
-
+    
     [SerializeField]
     private GameObject rawPorkObject;
 
@@ -26,10 +26,12 @@ public class Pig : Animal, IMoveable {
         this.health = new Health(100.0f);
         this.pigSpeed = 5.0f;
         this.currentDirection = Direction.E;
-        this.animalJobQueue.setIsWorking(true);
+        this.pauseDuration = 2.0f;
+        //this.animalJobQueue.setIsWorking(true);
 
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
+        
         /*
         for (int i = 0; i < 50; i++) {
 
@@ -49,17 +51,21 @@ public class Pig : Animal, IMoveable {
 
     // Update is called once per frame
     void Update () {
+
+        checkDeath();
+
         // TODO: Invoking methods from a queue
         if (animalJobQueue.isJobless()) {
+            print("Jobless");
             this.npcBehaviourManager.wander(this.pigInstance, this.animalJobQueue);
         } else {
             this.animalJobQueue.work();
         }
-        checkDeath();
     }
 
+
     public void checkDeath () {
-        if (getHealth().getHealthPoints() <= 0f) {
+        if (this.getHealth().getHealthPoints() <= 0f) {
             //Debug.Log("Died!");
             //Vector3 spawnPosition = transform.TransformPoint(gameObject.transform.localPosition);
             Instantiate(rawPorkObject, this.transform.position, this.transform.rotation);
