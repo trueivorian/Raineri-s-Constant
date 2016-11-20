@@ -50,5 +50,6 @@ public class JobQueue {
     public void setIsWorking (bool _isWorking) {
         this.isWorking = _isWorking;
     }
+
 }
 

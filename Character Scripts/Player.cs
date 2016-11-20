@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : Character {
+public class Player : Character, IMoveable {
 
     // Public reference to the player instance
     public static Player instance;
@@ -135,7 +135,6 @@ public class Player : Character {
             this.isTouchingPig = false;
         }
     }
-
     public void interact (IInteractive target) {
         InteractionController.startInteraction(this, target);
     }
