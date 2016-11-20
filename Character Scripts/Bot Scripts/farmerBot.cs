@@ -12,6 +12,7 @@ public class FarmerBot : Bot, IMoveable {
 
     private FarmerBot famerBotInstance;
     private float farmerSpeed;
+    private float pauseDuration;
 
     // Use this for initialization
     void Awake () {
@@ -26,6 +27,8 @@ public class FarmerBot : Bot, IMoveable {
         this.dialogue = new List<string>();
         this.initializeDialogue(dialogue);
         this.farmerSpeed = 5.0f;
+        this.pauseDuration = 2.0f;
+
         this.botJobQueue = new JobQueue();
     }
 
@@ -51,4 +54,7 @@ public class FarmerBot : Bot, IMoveable {
         _dialogue.Add("I am a very boring farmer who tills the farm all day long...");
     }
 
+    public float getPauseDuration() {
+        return this.pauseDuration;
+    }
 }

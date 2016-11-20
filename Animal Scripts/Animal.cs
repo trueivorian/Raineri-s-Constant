@@ -11,6 +11,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     protected string description;
     protected List<string> dialogue;
     protected NPCBehaviourManager npcBehaviourManager;
+    protected float pauseDuration;
 
     public Health getHealth () {
         return health;
@@ -38,4 +39,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
         return this.anim;
     }
 
+    public float getPauseDuration() {
+        return this.pauseDuration;
+    }
 }

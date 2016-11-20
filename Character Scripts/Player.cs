@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : Character, IMoveable {
+public class Player : Character {
 
     // Public reference to the player instance
     public static Player instance;
