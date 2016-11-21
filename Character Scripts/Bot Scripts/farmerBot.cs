@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 /**
  * Inherits from Bot
@@ -10,14 +11,14 @@ using System.Collections.Generic;
  */
 public class FarmerBot : Bot, IMoveable {
 
-    private FarmerBot famerBotInstance;
+    private FarmerBot farmerBotInstance;
     private float farmerSpeed;
     private float pauseDuration;
 
     // Use this for initialization
     void Awake () {
-        if (famerBotInstance == null) {
-            famerBotInstance = this;
+        if (farmerBotInstance == null) {
+            farmerBotInstance = this;
         }
 
         this.myBody = this.GetComponent<Rigidbody2D>();
@@ -30,22 +31,23 @@ public class FarmerBot : Bot, IMoveable {
         this.pauseDuration = 2.0f;
 
         this.botJobQueue = new JobQueue();
+        this.npcBehaviourManager = new NPCBehaviourManager();
     }
 
     // Update is called once per frame
     void Update () {
 
         if (botJobQueue.isJobless()) {
-            
-
+            print("Jobless");
+            this.npcBehaviourManager.wander(this.farmerBotInstance, this.botJobQueue);
         } else {
-            botJobQueue.work();
+            this.botJobQueue.work();
         }
 
     }
 
-    public FarmerBot getFarmerBotInstance () {
-        return this.famerBotInstance;
+    public FarmerBot getLocalInstance () {
+        return this.farmerBotInstance;
     }
 
     public override void initializeDialogue (List<string> _dialogue) {
@@ -54,7 +56,15 @@ public class FarmerBot : Bot, IMoveable {
         _dialogue.Add("I am a very boring farmer who tills the farm all day long...");
     }
 
+    public override bool isInteractable() {
+        return true;
+    }
+
     public float getPauseDuration() {
         return this.pauseDuration;
+    }
+
+    public override bool isAttackable () {
+        throw new NotImplementedException();
     }
 }

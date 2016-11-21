@@ -42,4 +42,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     public float getPauseDuration() {
         return this.pauseDuration;
     }
+
+    public abstract bool isInteractable ();
+    public abstract bool isAttackable ();
 }

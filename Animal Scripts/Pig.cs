@@ -9,7 +9,7 @@ public class Pig : Animal, IMoveable {
     private float pigSpeed;
     private float currentDirection;
     private IEnumerator coroutine;
-    
+
     [SerializeField]
     private GameObject rawPorkObject;
 
@@ -31,7 +31,7 @@ public class Pig : Animal, IMoveable {
 
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
-        
+
         /*
         for (int i = 0; i < 50; i++) {
 
@@ -75,7 +75,7 @@ public class Pig : Animal, IMoveable {
         }
     }
 
-    public Pig getPigInstance () {
+    public Pig getLocalInstance () {
         return this.pigInstance;
     }
 
@@ -103,5 +103,13 @@ public class Pig : Animal, IMoveable {
         _dialogue.Add("Hello...");
         _dialogue.Add("You can call be pig Sty...");
         _dialogue.Add("I am a very boring pig who eats all day long...");
+    }
+
+    public override bool isInteractable () {
+        return true;
+    }
+
+    public override bool isAttackable () {
+        return true;
     }
 }
