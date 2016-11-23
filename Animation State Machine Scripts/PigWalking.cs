@@ -13,26 +13,26 @@ public class PigWalking : StateMachineBehaviour {
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 		if (stateInfo.IsName ("pig_N_walking")) {
-			pigInstance.movePig (Direction.N);
+			pigInstance.move (Direction.N);
 		} else if (stateInfo.IsName ("pig_S_walking")) {
-			pigInstance.movePig (Direction.S);
+			pigInstance.move (Direction.S);
 		} else if (stateInfo.IsName ("pig_E_walking")) {
-			pigInstance.movePig (Direction.E);
+			pigInstance.move (Direction.E);
 		} else if (stateInfo.IsName ("pig_W_walking")) {
-			pigInstance.movePig (Direction.W);
+			pigInstance.move (Direction.W);
 		} else if (stateInfo.IsName ("pig_NW_walking")) {
-			pigInstance.movePig (Direction.NW);
+			pigInstance.move (Direction.NW);
 		} else if (stateInfo.IsName ("pig_NE_walking")) {
-			pigInstance.movePig (Direction.NE);
+			pigInstance.move (Direction.NE);
 		} else if (stateInfo.IsName ("pig_SW_walking")) {
-			pigInstance.movePig (Direction.SW);
+			pigInstance.move (Direction.SW);
 		} else if (stateInfo.IsName ("pig_SE_walking")) {
-			pigInstance.movePig (Direction.SE);
+			pigInstance.move (Direction.SE);
 		} else if (stateInfo.IsName ("pig_N_idle")
 			|| stateInfo.IsName ("pig_S_idle")
 			|| stateInfo.IsName ("pig_E_idle")
 			|| stateInfo.IsName ("pig_W_idle")) {
-			pigInstance.movePig (0.0f, pigInstance.getCurrentDirection ());
+			pigInstance.move (0.0f, pigInstance.getCurrentDirection ());
 		}
 	}
 

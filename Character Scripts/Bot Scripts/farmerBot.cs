@@ -12,9 +12,9 @@ using System;
 public class FarmerBot : Bot, IMoveable {
 
     private FarmerBot farmerBotInstance;
-    private float farmerSpeed;
+    private float movementSpeed;
     private float pauseDuration;
-
+    private float currentDirection;
     // Use this for initialization
     void Awake () {
         if (farmerBotInstance == null) {
@@ -27,9 +27,9 @@ public class FarmerBot : Bot, IMoveable {
         this.description = "This is a farmer.";
         this.dialogue = new List<string>();
         this.initializeDialogue(dialogue);
-        this.farmerSpeed = 5.0f;
+        this.movementSpeed = 5.0f;
         this.pauseDuration = 2.0f;
-
+        this.currentDirection = Direction.E;
         this.botJobQueue = new JobQueue();
         this.npcBehaviourManager = new NPCBehaviourManager();
     }
@@ -56,15 +56,33 @@ public class FarmerBot : Bot, IMoveable {
         _dialogue.Add("I am a very boring farmer who tills the farm all day long...");
     }
 
-    public override bool isInteractable() {
+    public override bool isInteractable () {
         return true;
     }
 
-    public float getPauseDuration() {
+    public float getPauseDuration () {
         return this.pauseDuration;
     }
 
     public override bool isAttackable () {
         throw new NotImplementedException();
+    }
+
+    public void move (float speed, float direction) {
+        Vector2 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
+
+        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
+    }
+
+    public void move (float direction) {
+        move(movementSpeed, direction);
+    }
+
+    public void stop () {
+        move(0.0f, currentDirection);
+    }
+
+    public float getCurrentDirection () {
+        return currentDirection;
     }
 }
