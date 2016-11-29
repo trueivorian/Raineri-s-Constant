@@ -19,4 +19,6 @@ public interface IInteractive {
     * _dialogue: passes in an empty dialogue list for initialization.
     */
     void initializeDialogue (List<string> _dialogue);
+
+    bool isInteractable ();
 }

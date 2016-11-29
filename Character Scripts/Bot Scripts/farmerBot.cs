@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 /**
  * Inherits from Bot
@@ -10,14 +11,14 @@ using System.Collections.Generic;
  */
 public class FarmerBot : Bot, IMoveable {
 
-    private FarmerBot famerBotInstance;
-    private float farmerSpeed;
+    private FarmerBot farmerBotInstance;
+    private float movementSpeed;
     private float pauseDuration;
-
+    private float currentDirection;
     // Use this for initialization
     void Awake () {
-        if (famerBotInstance == null) {
-            famerBotInstance = this;
+        if (farmerBotInstance == null) {
+            farmerBotInstance = this;
         }
 
         this.myBody = this.GetComponent<Rigidbody2D>();
@@ -26,26 +27,27 @@ public class FarmerBot : Bot, IMoveable {
         this.description = "This is a farmer.";
         this.dialogue = new List<string>();
         this.initializeDialogue(dialogue);
-        this.farmerSpeed = 5.0f;
+        this.movementSpeed = 5.0f;
         this.pauseDuration = 2.0f;
-
+        this.currentDirection = Direction.E;
         this.botJobQueue = new JobQueue();
+        this.npcBehaviourManager = new NPCBehaviourManager();
     }
 
     // Update is called once per frame
     void Update () {
 
         if (botJobQueue.isJobless()) {
-            
-
+            print("Jobless");
+            this.npcBehaviourManager.wander(this.farmerBotInstance, this.botJobQueue);
         } else {
-            botJobQueue.work();
+            this.botJobQueue.work();
         }
 
     }
 
-    public FarmerBot getFarmerBotInstance () {
-        return this.famerBotInstance;
+    public FarmerBot getLocalInstance () {
+        return this.farmerBotInstance;
     }
 
     public override void initializeDialogue (List<string> _dialogue) {
@@ -54,7 +56,33 @@ public class FarmerBot : Bot, IMoveable {
         _dialogue.Add("I am a very boring farmer who tills the farm all day long...");
     }
 
-    public float getPauseDuration() {
+    public override bool isInteractable () {
+        return true;
+    }
+
+    public float getPauseDuration () {
         return this.pauseDuration;
+    }
+
+    public override bool isAttackable () {
+        throw new NotImplementedException();
+    }
+
+    public void move (float speed, float direction) {
+        Vector2 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
+
+        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
+    }
+
+    public void move (float direction) {
+        move(movementSpeed, direction);
+    }
+
+    public void stop () {
+        move(0.0f, currentDirection);
+    }
+
+    public float getCurrentDirection () {
+        return currentDirection;
     }
 }

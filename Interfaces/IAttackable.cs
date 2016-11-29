@@ -5,5 +5,5 @@ public interface IAttackable {
 
     Health getHealth ();
     float calculateDamage ();
-
+    bool isAttackable ();
 }

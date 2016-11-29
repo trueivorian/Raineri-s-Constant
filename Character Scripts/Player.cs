@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Player : Character {
 
@@ -14,8 +15,9 @@ public class Player : Character {
     private bool isMoving;
     private float currentDirection;
 
-    // For interactionController. Currently for pig only
-    private bool isTouchingPig;
+    // For interactionController
+    private bool isTouchingNPC;
+    private GameObject touchedNPC;
 
     // Called on script instance creation
     private void Awake () {
@@ -27,7 +29,6 @@ public class Player : Character {
 
         // Initialise player components
         this.anim = this.GetComponent<Animator>();
-        //this.animState = this.GetComponent<Animation> ();
         this.myBody = this.GetComponent<Rigidbody2D>();
         this.moveError = 0.2f;
         this.moveTime = 0.0f;
@@ -38,7 +39,7 @@ public class Player : Character {
         Debug.Log("Screen Width: " + Screen.currentResolution.width);
         Debug.Log("Screen Height: " + Screen.currentResolution.height);
 
-        this.isTouchingPig = false;
+        this.isTouchingNPC = false;
     }
 
     // Update is called once per frame
@@ -47,9 +48,16 @@ public class Player : Character {
         // This determines the direction the player faces
         chooseDirection();
 
-        if (isTouchingPig) {
+        if (isTouchingNPC) {
             if (Input.GetKeyDown(KeyCode.X)) {
-                this.examine(GameObject.FindGameObjectWithTag("Pig").GetComponent<Pig>().getPigInstance());
+                if (touchedNPC.GetComponent<IInteractive>().isInteractable()) {
+                    this.examine(this.touchedNPC.GetComponent<IInteractive>());
+                }
+            } else if (Input.GetKeyDown(KeyCode.C)) {
+                if (touchedNPC.GetComponent<IAttackable>().isAttackable()) {
+                    this.attack(touchedNPC.GetComponent<IAttackable>());
+                    Debug.Log(touchedNPC.GetComponent<IAttackable>().getHealth().getHealthPoints());
+                }
             }
         }
     }
@@ -121,19 +129,14 @@ public class Player : Character {
 
     // Called when a GameObject enters the player's collider space
     private void OnTriggerEnter2D (Collider2D target) {
-        if (target.tag == "Pig") {
-            GameObject pig = GameObject.FindGameObjectWithTag("Pig");
-            this.attack(pig.GetComponent<Pig>().getPigInstance());
-            //Debug.Log(pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
-
-            this.isTouchingPig = true;
-        }
+        this.isTouchingNPC = true;
+        GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
+        this.touchedNPC = targetObject;
     }
 
     private void OnTriggerExit2D (Collider2D target) {
-        if (target.tag == "Pig") {
-            this.isTouchingPig = false;
-        }
+        this.isTouchingNPC = false;
+        this.touchedNPC = null;
     }
     public void interact (IInteractive target) {
         InteractionController.startInteraction(this, target);
@@ -141,5 +144,9 @@ public class Player : Character {
 
     public void examine (IInteractive target) {
         InteractionController.startDescription(this, target);
+    }
+
+    public override bool isAttackable () {
+        return true;
     }
 }

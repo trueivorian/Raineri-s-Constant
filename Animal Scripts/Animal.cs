@@ -12,6 +12,8 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     protected List<string> dialogue;
     protected NPCBehaviourManager npcBehaviourManager;
     protected float pauseDuration;
+    protected float movementSpeed;
+    protected float currentDirection;
 
     public Health getHealth () {
         return health;
@@ -41,5 +43,29 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
 
     public float getPauseDuration() {
         return this.pauseDuration;
+    }
+
+    public abstract bool isInteractable ();
+    public abstract bool isAttackable ();
+
+    // Move the Animal object
+    public void move (float speed, float direction) {
+        Vector2 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
+
+        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
+    }
+
+    // Move the Animal object
+    public void move (float direction) {
+
+        move(movementSpeed, direction);
+    }
+
+    public void stop () {
+        move(0.0f, currentDirection);
+    }
+
+    public float getCurrentDirection () {
+        return currentDirection;
     }
 }

@@ -29,4 +29,6 @@ public abstract class Character : MonoBehaviour, IAttackable {
     public Animator getAnimator () {
         return this.anim;
     }
+
+    public abstract bool isAttackable ();
 }
