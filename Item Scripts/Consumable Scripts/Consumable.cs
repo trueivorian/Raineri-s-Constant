@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Consumable : MonoBehaviour {
+public class Consumable : Item {
 
 	// Use this for initialization
 	void Start () {
