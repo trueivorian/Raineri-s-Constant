@@ -7,6 +7,12 @@ public abstract class Character : MonoBehaviour, IAttackable {
 	protected Rigidbody2D myBody;
 	protected Animator anim;
 	protected Health health;
+	protected Inventory inventory;
+	//protected List<Item> inventory;
+
+	void Awake() {
+		
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -26,4 +32,7 @@ public abstract class Character : MonoBehaviour, IAttackable {
         return 1.0f;
     }
 
+    public Animator getAnimator () {
+        return this.anim;
+    }
 }

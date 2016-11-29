@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : Character {
 
@@ -9,9 +10,6 @@ public class Player : Character {
     // Player movement parameters
     private float playerSpeed;
     private float playerMoveDistance;
-    private float moveError;
-    private float moveTime;
-    private bool isMoving;
     private float currentDirection;
 
     // For interactionController. Currently for pig only
@@ -25,20 +23,20 @@ public class Player : Character {
             instance = this;
         }
 
+		//Initialise Character Components
+		this.anim = this.GetComponent<Animator>();
+		this.myBody = this.GetComponent<Rigidbody2D>();
+		this.inventory = new Inventory();
+
         // Initialise player components
-        this.anim = this.GetComponent<Animator>();
-        //this.animState = this.GetComponent<Animation> ();
-        this.myBody = this.GetComponent<Rigidbody2D>();
-        this.moveError = 0.2f;
-        this.moveTime = 0.0f;
-        this.isMoving = false;
         this.currentDirection = Direction.E;
         this.playerSpeed = 5.0f;
         this.playerMoveDistance = 5.0f;
-        Debug.Log("Screen Width: " + Screen.currentResolution.width);
-        Debug.Log("Screen Height: " + Screen.currentResolution.height);
-
         this.isTouchingPig = false;
+
+//		for (int i = 0; i < this.inventory.getNumIcons(); i++) {
+//			this.inventory.addInventoryItem (this.inventory [i]);
+//		}
     }
 
     // Update is called once per frame
@@ -121,13 +119,16 @@ public class Player : Character {
 
     // Called when a GameObject enters the player's collider space
     private void OnTriggerEnter2D (Collider2D target) {
-        if (target.tag == "Pig") {
-            GameObject pig = GameObject.FindGameObjectWithTag("Pig");
-            this.attack(pig.GetComponent<Pig>().getPigInstance());
-            //Debug.Log(pig.GetComponent<Pig>().getPigInstance().getHealth().getHealthPoints());
-
-            this.isTouchingPig = true;
-        }
+		if (target.tag == "Pig") {
+			GameObject pig = GameObject.FindGameObjectWithTag ("Pig");
+			this.attack (pig.GetComponent<Pig> ().getPigInstance ());
+			this.isTouchingPig = true;
+		} else if (target.tag == "DroppedItem") {
+			//this.inventory.Add (target.GetComponent<Item>());
+			this.inventory.addInventoryItem (target.GetComponent<Item> ());
+			target.gameObject.SetActive (false);
+			Debug.Log ("Item Added to Inventory");
+		}
     }
 
     private void OnTriggerExit2D (Collider2D target) {

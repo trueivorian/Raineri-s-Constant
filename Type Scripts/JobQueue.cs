@@ -14,7 +14,8 @@ public class JobQueue {
     }
 
     public void work () {
-        if (this.isWorking) {
+        // Debug.Log(this.isWorking);
+        if (!this.isWorking) {
             this.doJob();
         }
     }
