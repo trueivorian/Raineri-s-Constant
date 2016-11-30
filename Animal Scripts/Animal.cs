@@ -14,6 +14,13 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     protected float pauseDuration;
     protected float movementSpeed;
     protected float currentDirection;
+    protected GameController gameController;
+    protected List<GameObject> droppedItems;
+
+    void Awake () {
+
+
+    }
 
     public Health getHealth () {
         return health;
@@ -37,11 +44,11 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
 
     public abstract void initializeDialogue (List<string> _dialogue);
 
-    public Animator getAnimator() {
+    public Animator getAnimator () {
         return this.anim;
     }
 
-    public float getPauseDuration() {
+    public float getPauseDuration () {
         return this.pauseDuration;
     }
 
@@ -68,4 +75,18 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     public float getCurrentDirection () {
         return currentDirection;
     }
+    public void checkDeath () {
+        if (this.getHealth().getHealthPoints() <= 0f) {
+
+            if (droppedItems.Count != 0) {
+
+                for (int i = 0; i < droppedItems.Count; i++) {
+                    this.gameController.addGameObject(droppedItems[i], this.transform.position, this.transform.rotation);
+                }
+            }
+
+            this.gameController.removeGameObject(this.gameObject);
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Item : MonoBehaviour {
+public class Food : Consumable {
 
 	// Use this for initialization
 	void Start () {

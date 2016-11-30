@@ -6,15 +6,24 @@ using System.Collections.Generic;
 public class Pig : Animal, IMoveable {
 
     private Pig pigInstance;
+    private bool isDead;
 
     [SerializeField]
-    private GameObject rawPorkObject;
+    private GameObject pork;
 
     // Use this for initialization
     void Awake () {
+
+        // Initialise Animal Components
+        this.anim = this.GetComponent<Animator>();
+        this.myBody = this.GetComponent<Rigidbody2D>();
+        this.gameController = FindObjectOfType<GameController>();
+
+        // Initialise pig components
         if (pigInstance == null) {
             pigInstance = this;
         }
+
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
         this.animalJobQueue = new JobQueue();
@@ -28,6 +37,9 @@ public class Pig : Animal, IMoveable {
 
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
+
+        this.droppedItems = new List<GameObject>();
+        this.droppedItems.Add(pork);
     }
 
     // Update is called once per frame
@@ -60,9 +72,9 @@ public class Pig : Animal, IMoveable {
     }
 
     public override void initializeDialogue (List<string> _dialogue) {
-        _dialogue.Add("Hello...");
-        _dialogue.Add("You can call be pig Sty...");
-        _dialogue.Add("I am a very boring pig who eats all day long...");
+        _dialogue.Add("Oink!");
+        _dialogue.Add("Oink! Oink!");
+        _dialogue.Add("Oink! Oink! Oink!");
     }
 
     public override bool isInteractable () {

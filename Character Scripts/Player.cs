@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
+using System.Collections.Generic;
 
 public class Player : Character {
 
@@ -10,9 +10,6 @@ public class Player : Character {
     // Player movement parameters
     private float playerSpeed;
     private float playerMoveDistance;
-    private float moveError;
-    private float moveTime;
-    private bool isMoving;
     private float currentDirection;
 
     // For interactionController
@@ -27,6 +24,11 @@ public class Player : Character {
             instance = this;
         }
 
+        //Initialise Character Components
+        this.anim = this.GetComponent<Animator>();
+        this.myBody = this.GetComponent<Rigidbody2D>();
+        this.inventory = new Inventory();
+
         // Initialise player components
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
@@ -36,10 +38,12 @@ public class Player : Character {
         this.currentDirection = Direction.E;
         this.playerSpeed = 5.0f;
         this.playerMoveDistance = 5.0f;
-        Debug.Log("Screen Width: " + Screen.currentResolution.width);
-        Debug.Log("Screen Height: " + Screen.currentResolution.height);
 
         this.isTouchingNPC = false;
+
+        //		for (int i = 0; i < this.inventory.getNumIcons(); i++) {
+        //			this.inventory.addInventoryItem (this.inventory [i]);
+        //		}
     }
 
     // Update is called once per frame
