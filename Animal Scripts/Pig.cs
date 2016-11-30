@@ -6,8 +6,6 @@ using System.Collections.Generic;
 public class Pig : Animal, IMoveable {
 
     private Pig pigInstance;
-    private float pigSpeed;
-    private float currentDirection;
     private bool isDead;
 
     [SerializeField]
