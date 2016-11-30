@@ -36,7 +36,6 @@ public class FarmerBot : Bot, IMoveable {
 
     // Update is called once per frame
     void Update () {
-
         if (botJobQueue.isJobless()) {
             print("Jobless");
             this.npcBehaviourManager.wander(this.farmerBotInstance, this.botJobQueue);
@@ -85,4 +84,5 @@ public class FarmerBot : Bot, IMoveable {
     public float getCurrentDirection () {
         return currentDirection;
     }
+
 }

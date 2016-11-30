@@ -18,6 +18,6 @@ public abstract class Bot : Character, IInteractive {
     }
 
     public abstract void initializeDialogue (List<string> _dialogue);
-
     public abstract bool isInteractable ();
+
 }
