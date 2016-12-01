@@ -110,6 +110,13 @@ public class Player : Character {
         this.isTouchingNPC = true;
         GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
         this.touchedNPC = targetObject;
+
+        if (target.tag == "DroppedItem") {
+            //this.inventory.Add (target.GetComponent<Item>());
+            this.inventory.addInventoryItem(target.GetComponent<Item>());
+            target.gameObject.SetActive(false);
+            Debug.Log("Item Added to Inventory");
+        }
     }
 
     private void OnTriggerExit2D (Collider2D target) {
