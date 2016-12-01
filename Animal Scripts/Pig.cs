@@ -15,8 +15,6 @@ public class Pig : Animal, IMoveable {
     void Awake () {
 
         // Initialise Animal Components
-        this.anim = this.GetComponent<Animator>();
-        this.myBody = this.GetComponent<Rigidbody2D>();
         this.gameController = FindObjectOfType<GameController>();
 
         // Initialise pig components
@@ -33,8 +31,6 @@ public class Pig : Animal, IMoveable {
         this.movementSpeed = 5.0f;
         this.currentDirection = Direction.E;
         this.pauseDuration = 2.0f;
-        //this.animalJobQueue.setIsWorking(true);
-
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
 
@@ -45,25 +41,12 @@ public class Pig : Animal, IMoveable {
     // Update is called once per frame
     void Update () {
 
-        checkDeath();
+        this.checkDeath();
 
-        // TODO: Invoking methods from a queue
         if (animalJobQueue.isJobless()) {
             this.npcBehaviourManager.wander(this.pigInstance, this.animalJobQueue);
         } else {
             this.animalJobQueue.work();
-        }
-    }
-
-
-    public void checkDeath () {
-        if (this.getHealth().getHealthPoints() <= 0f) {
-            //Debug.Log("Died!");
-            //Vector3 spawnPosition = transform.TransformPoint(gameObject.transform.localPosition);
-            Instantiate(rawPorkObject, this.transform.position, this.transform.rotation);
-
-            //Instantiate(rawPorkObject, new Vector3(gameObject.transform.position.x-2.8f,gameObject.transform.position.y+0.19f,gameObject.transform.position.z), gameObject.transform.rotation);
-            Destroy(gameObject);
         }
     }
 

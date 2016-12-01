@@ -32,9 +32,6 @@ public class Player : Character {
         // Initialise player components
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
-        this.moveError = 0.2f;
-        this.moveTime = 0.0f;
-        this.isMoving = false;
         this.currentDirection = Direction.E;
         this.playerSpeed = 5.0f;
         this.playerMoveDistance = 5.0f;
