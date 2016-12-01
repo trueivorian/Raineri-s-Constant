@@ -37,28 +37,20 @@ public class NPCBehaviourManager {
             Debug.Log("Move");
             //TODO: Implement a better form of movement function
             if (randomVal <= -7.5f) {
-                //Move up
                 this.addJobMove(Direction.Dir.N, targetNPC, targetQueue);
             } else if (randomVal <= -5.0f) {
-                //Move left
                 this.addJobMove(Direction.Dir.NE, targetNPC, targetQueue);
             } else if (randomVal <= -2.5f) {
-                //Move left
                 this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
             } else if (randomVal <= 0.0f) {
-                //Move left
                 this.addJobMove(Direction.Dir.SE, targetNPC, targetQueue);
             } else if (randomVal <= 2.5f) {
-                //Move left
                 this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
             } else if (randomVal <= 5.0f) {
-                //Move down
                 this.addJobMove(Direction.Dir.SW, targetNPC, targetQueue);
             } else if (randomVal <= 7.5f) {
-                //Move down
                 this.addJobMove(Direction.Dir.W, targetNPC, targetQueue);
             } else {
-                //Move right
                 this.addJobMove(Direction.Dir.NW, targetNPC, targetQueue);
             }
             this.isLazing = true;
@@ -69,6 +61,9 @@ public class NPCBehaviourManager {
     public void addJobMove (Direction.Dir direction, IMoveable targetNPC, JobQueue targetQueue) {
         targetQueue.addJob(() => {
             Direction.moveThere(direction, targetNPC);
+        });
+        targetQueue.addJob(() => {
+            Direction.andStopThere(direction, targetNPC);
         });
     }
 }

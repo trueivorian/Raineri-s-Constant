@@ -8,9 +8,7 @@ public class Player : Character {
     public static Player instance;
 
     // Player movement parameters
-    private float playerSpeed;
     private float playerMoveDistance;
-    private float currentDirection;
 
     // For interactionController
     private bool isTouchingNPC;
@@ -33,7 +31,7 @@ public class Player : Character {
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
         this.currentDirection = Direction.E;
-        this.playerSpeed = 5.0f;
+        this.movementSpeed = 5.0f;
         this.playerMoveDistance = 5.0f;
 
         this.isTouchingNPC = false;
@@ -74,56 +72,37 @@ public class Player : Character {
     private void chooseDirection () {
 
         if (Input.GetKeyDown("up")) {
-            anim.SetBool("upPressed", true);
+            Direction.moveThere(Direction.Dir.N, this);
         }
 
         if (Input.GetKeyUp("up")) {
-            anim.SetBool("upPressed", false);
+            Direction.andStopThere(Direction.Dir.N, this);
         }
 
         if (Input.GetKeyDown("down")) {
-            anim.SetBool("downPressed", true);
+            Direction.moveThere(Direction.Dir.S, this);
         }
 
         if (Input.GetKeyUp("down")) {
-            anim.SetBool("downPressed", false);
+            Direction.andStopThere(Direction.Dir.S, this);
         }
 
         if (Input.GetKeyDown("left")) {
-            anim.SetBool("leftPressed", true);
+            Direction.moveThere(Direction.Dir.W, this);
         }
 
         if (Input.GetKeyUp("left")) {
-            anim.SetBool("leftPressed", false);
+            Direction.andStopThere(Direction.Dir.W, this);
         }
 
         if (Input.GetKeyDown("right")) {
-            anim.SetBool("rightPressed", true);
+            Direction.moveThere(Direction.Dir.E, this);
         }
 
         if (Input.GetKeyUp("right")) {
-            anim.SetBool("rightPressed", false);
+            Direction.andStopThere(Direction.Dir.E, this);
         }
 
-    }
-
-    // Move the player object
-    public void movePlayer (float speed, float direction) {
-        Vector3 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
-        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
-    }
-
-    // Move the player object
-    public void movePlayer (float direction) {
-        movePlayer(playerSpeed, direction);
-    }
-
-    public void stopPlayer () {
-        movePlayer(0.0f, currentDirection);
-    }
-
-    public float getCurrentDirection () {
-        return currentDirection;
     }
 
     // Called when a GameObject enters the player's collider space

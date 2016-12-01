@@ -63,7 +63,6 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
 
     // Move the Animal object
     public void move (float direction) {
-
         move(movementSpeed, direction);
     }
 
