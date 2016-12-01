@@ -109,9 +109,7 @@ public class Player : Character {
 
     // Move the player object
     public void movePlayer (float speed, float direction) {
-
         Vector3 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
-
         this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
     }
 
