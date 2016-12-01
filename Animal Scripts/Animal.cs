@@ -16,6 +16,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     protected float currentDirection;
     protected GameController gameController;
     protected List<GameObject> droppedItems;
+    protected bool isTouchingAggressor;
 
     void Awake () {
 

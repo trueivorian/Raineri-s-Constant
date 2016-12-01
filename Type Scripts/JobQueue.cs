@@ -51,5 +51,10 @@ public class JobQueue {
     public void setIsWorking (bool _isWorking) {
         this.isWorking = _isWorking;
     }
+
+    public void clear() {
+        this.jobQueue.Clear();
+        Debug.Log(this.isJobless());
+    }
 }
 

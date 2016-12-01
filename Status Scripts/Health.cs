@@ -4,8 +4,12 @@ using System.Collections;
 public class Health : Status {
 	private float healthPoints;
 
-	public Health(float _healthPoints){
+    // Currently temporary
+    private bool isReduced;
+
+    public Health(float _healthPoints){
 		this.healthPoints = _healthPoints;
+        this.isReduced = false;
 	}
 
 	public float getHealthPoints () {
@@ -14,7 +18,12 @@ public class Health : Status {
 
 	public override void modifyStatus(float change) {
 		healthPoints += change;
+        this.isReduced = true;
 	}
+
+    public bool getIsReduced() {
+        return this.isReduced;
+    }
 
 
 }
