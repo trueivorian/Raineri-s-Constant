@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class Character : MonoBehaviour, IAttackable, IMoveable {
+public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttacking {
 
 	protected Rigidbody2D myBody;
 	protected Animator anim;
@@ -27,7 +27,14 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable {
 	}
 
 	public void attack (IAttackable victim){
-		victim.getHealth().modifyStatus (-30.0f);
+        DamageManager damageManager;
+        if (GameManager.getDamageManager() != null) {
+            damageManager = GameManager.getDamageManager();
+        } else {
+            damageManager = new DamageManager();
+            GameManager.setDamageManager(damageManager);
+        }
+        damageManager.callAttack(this, victim);
 	}
 
     //TODO: implement calculateDamage()

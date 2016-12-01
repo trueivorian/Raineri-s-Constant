@@ -11,6 +11,7 @@ public class NPCBehaviourManager {
     //This will be used to implement bot behaviour similar to human behaviour.
     private bool isLazing;
     private float currentTime;
+    private bool isChargingForAttack;
     /**
      * Variables needed:
      * radius movement
@@ -18,6 +19,7 @@ public class NPCBehaviourManager {
 
     public NPCBehaviourManager () {
         this.isLazing = false;
+        this.isChargingForAttack = false;
         this.currentTime = 0.0f;
     }
 
@@ -31,8 +33,7 @@ public class NPCBehaviourManager {
             } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
                 currentTime = 0.0f;
                 this.isLazing = false;
-            } else {
-            }
+            } else {}
         } else {
             Debug.Log("Move");
             //TODO: Implement a better form of movement function
@@ -65,5 +66,19 @@ public class NPCBehaviourManager {
         targetQueue.addJob(() => {
             Direction.andStopThere(direction, targetNPC);
         });
+    }
+
+    public void retaliate (IMoveable targetNPC, JobQueue targetQueue, IAttacking attackingNPC) {
+        if (this.isChargingForAttack) {
+            if (currentTime == 0) {
+                currentTime = Time.time;
+            } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
+                currentTime = 0.0f;
+                this.isChargingForAttack = false;
+            } else {}
+        } else {
+            Debug.Log("Retaliate!");
+            this.isChargingForAttack = true;
+        }
     }
 }

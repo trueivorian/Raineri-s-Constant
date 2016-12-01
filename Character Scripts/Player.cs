@@ -7,9 +7,6 @@ public class Player : Character {
     // Public reference to the player instance
     public static Player instance;
 
-    // Player movement parameters
-    private float playerMoveDistance;
-
     // For interactionController
     private bool isTouchingNPC;
     private GameObject touchedNPC;
@@ -32,7 +29,6 @@ public class Player : Character {
         this.myBody = this.GetComponent<Rigidbody2D>();
         this.currentDirection = Direction.E;
         this.movementSpeed = 5.0f;
-        this.playerMoveDistance = 5.0f;
 
         this.isTouchingNPC = false;
 
