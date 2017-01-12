@@ -59,6 +59,38 @@ public class NPCBehaviourManager {
 
     }
 
+    public void moveTowards(IMoveable targetNPC, JobQueue targetQueue, Vector2 direction) {
+        if (this.isLazing) {
+            if (currentTime == 0) {
+                currentTime = Time.time;
+            } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
+                currentTime = 0.0f;
+                this.isLazing = false;
+            } else { }
+        } else {
+            Debug.Log("Move");
+            //TODO: Implement a better form of movement function
+            if (direction.x >= 0.0f) {
+                this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
+            }// else if (randomVal <= -5.0f) {
+            //    this.addJobMove(Direction.Dir.NE, targetNPC, targetQueue);
+            //} else if (randomVal <= -2.5f) {
+            //    this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
+            //} else if (randomVal <= 0.0f) {
+            //    this.addJobMove(Direction.Dir.SE, targetNPC, targetQueue);
+            //} else if (randomVal <= 2.5f) {
+            //    this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
+            //} else if (randomVal <= 5.0f) {
+            //    this.addJobMove(Direction.Dir.SW, targetNPC, targetQueue);
+            //} else if (randomVal <= 7.5f) {
+            //    this.addJobMove(Direction.Dir.W, targetNPC, targetQueue);
+            //} else {
+            //    this.addJobMove(Direction.Dir.NW, targetNPC, targetQueue);
+            //}
+            this.isLazing = true;
+        }
+    }
+
     public void addJobMove (Direction.Dir direction, IMoveable targetNPC, JobQueue targetQueue) {
         targetQueue.addJob(() => {
             Direction.moveThere(direction, targetNPC);
@@ -68,14 +100,22 @@ public class NPCBehaviourManager {
         });
     }
 
-    public void retaliate (IMoveable targetNPC, JobQueue targetQueue, IAttacking attackingNPC) {
+    public void retaliate (IMoveable targetNPC, JobQueue targetQueue, GameObject attackingNPC) {
+
+        // If the pig is currently within the attack delay, wait.
         if (this.isChargingForAttack) {
+            
+            // If no clock has started, let currentTime be current time.
             if (currentTime == 0) {
                 currentTime = Time.time;
+
+            // If the period of delay is more than the pauseDuration, change condition to false and attack on the next frame.
             } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
                 currentTime = 0.0f;
                 this.isChargingForAttack = false;
             } else {}
+
+        // If the pig has the wait period over, it will attack
         } else {
             Debug.Log("Retaliate!");
             this.isChargingForAttack = true;

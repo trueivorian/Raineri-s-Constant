@@ -130,4 +130,15 @@ public class Player : Character {
     public override bool isAttackable () {
         return true;
     }
+
+    public void attack (IAttackable victim) {
+        DamageManager damageManager;
+        if (GameManager.getDamageManager() != null) {
+            damageManager = GameManager.getDamageManager();
+        } else {
+            damageManager = new DamageManager();
+            GameManager.setDamageManager(damageManager);
+        }
+        damageManager.callAttack(this, victim);
+    }
 }

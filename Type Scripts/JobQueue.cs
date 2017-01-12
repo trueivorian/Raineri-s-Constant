@@ -14,7 +14,7 @@ public class JobQueue {
     }
 
     public void work () {
-        Debug.Log(this.isWorking);
+        //Debug.Log(this.isWorking);
         if (!this.isWorking) {
             this.doJob();
         }
@@ -54,7 +54,7 @@ public class JobQueue {
 
     public void clear() {
         this.jobQueue.Clear();
-        Debug.Log(this.isJobless());
+        //Debug.Log(this.isJobless());
     }
 }
 
