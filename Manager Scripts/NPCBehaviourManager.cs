@@ -60,9 +60,6 @@ public class NPCBehaviourManager {
             } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
                 currentTime = 0.0f;
                 this.isLazing = false;
-                if (!this.isLazing) {
-                    targetQueue.setQueueLock(false);
-                }
             } else { }
         } else {
             Debug.Log("Move");
@@ -81,9 +78,6 @@ public class NPCBehaviourManager {
                 this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
             }
             this.isLazing = true;
-            if (this.isLazing) {
-                targetQueue.setQueueLock(true);
-            }
         }
     }
 

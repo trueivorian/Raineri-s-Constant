@@ -7,12 +7,10 @@ public class JobQueue {
 
     private Queue<Action> jobQueue;
     private bool isWorking;
-    private bool queueLock;
 
     public JobQueue () {
         this.jobQueue = new Queue<Action>();
         this.isWorking = false;
-        this.queueLock = false;
     }
 
     public void work () {
@@ -46,21 +44,16 @@ public class JobQueue {
     }
 
     public void addJob (Action job) {
-        if (!this.queueLock) {
-            jobQueue.Enqueue(job);
-        }
+        jobQueue.Enqueue(job);
     }
 
     public void setIsWorking (bool _isWorking) {
         this.isWorking = _isWorking;
     }
 
-    public void clear() {
+    public void clear () {
         this.jobQueue.Clear();
     }
 
-    public void setQueueLock(bool condition) {
-        this.queueLock = condition;
-    }
 }
 
