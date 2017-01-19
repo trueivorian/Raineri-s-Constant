@@ -54,7 +54,6 @@ public class JobQueue {
 
     public void clear() {
         this.jobQueue.Clear();
-        //Debug.Log(this.isJobless());
     }
 }
 
