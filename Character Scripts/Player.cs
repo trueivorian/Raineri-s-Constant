@@ -29,7 +29,7 @@ public class Player : Character {
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
         this.currentDirection = Direction.E;
-        this.movementSpeed = 5.0f;
+        this.movementSpeed = 3.5f;
 
         this.isTouchingNPC = false;
 
@@ -109,8 +109,7 @@ public class Player : Character {
         GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
         this.touchedNPC = targetObject;
 
-        if (target.tag == "DroppedItem") {
-            //this.inventory.Add (target.GetComponent<Item>());
+		if (target.tag == "DroppedItem") {
             this.inventory.addInventoryItem(target.GetComponent<Item>());
             target.gameObject.SetActive(false);
             Debug.Log("Item Added to Inventory");
@@ -121,6 +120,7 @@ public class Player : Character {
         this.isTouchingNPC = false;
         this.touchedNPC = null;
     }
+
     public void interact (IInteractive target) {
         InteractionController.startInteraction(this, target);
     }
