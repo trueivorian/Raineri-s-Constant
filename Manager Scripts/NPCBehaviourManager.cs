@@ -11,6 +11,7 @@ public class NPCBehaviourManager {
     //This will be used to implement bot behaviour similar to human behaviour.
     private bool isLazing;
     private float currentTime;
+    private bool isChargingForAttack;
     /**
      * Variables needed:
      * radius movement
@@ -18,6 +19,7 @@ public class NPCBehaviourManager {
 
     public NPCBehaviourManager () {
         this.isLazing = false;
+        this.isChargingForAttack = false;
         this.currentTime = 0.0f;
     }
 
@@ -31,44 +33,52 @@ public class NPCBehaviourManager {
             } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
                 currentTime = 0.0f;
                 this.isLazing = false;
-            } else {
-            }
+            } else {}
         } else {
-            Debug.Log("Move");
+            //Debug.Log("Move");
             //TODO: Implement a better form of movement function
             if (randomVal <= -7.5f) {
-                //Move up
-                this.addJobMove(Direction.N, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.N, targetNPC, targetQueue);
             } else if (randomVal <= -5.0f) {
-                //Move left
-                this.addJobMove(Direction.NE, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.NE, targetNPC, targetQueue);
             } else if (randomVal <= -2.5f) {
-                //Move left
-                this.addJobMove(Direction.E, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
             } else if (randomVal <= 0.0f) {
-                //Move left
-                this.addJobMove(Direction.SE, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.SE, targetNPC, targetQueue);
             } else if (randomVal <= 2.5f) {
-                //Move left
-                this.addJobMove(Direction.S, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
             } else if (randomVal <= 5.0f) {
-                //Move down
-                this.addJobMove(Direction.SW, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.SW, targetNPC, targetQueue);
             } else if (randomVal <= 7.5f) {
-                //Move down
-                this.addJobMove(Direction.W, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.W, targetNPC, targetQueue);
             } else {
-                //Move right
-                this.addJobMove(Direction.NW, targetNPC, targetQueue);
+                this.addJobMove(Direction.Dir.NW, targetNPC, targetQueue);
             }
             this.isLazing = true;
         }
 
     }
 
-    public void addJobMove (float direction, IMoveable targetNPC, JobQueue targetQueue) {
+    public void addJobMove (Direction.Dir direction, IMoveable targetNPC, JobQueue targetQueue) {
         targetQueue.addJob(() => {
-            targetNPC.move(direction);
+            Direction.moveThere(direction, targetNPC);
         });
+        targetQueue.addJob(() => {
+            Direction.andStopThere(direction, targetNPC);
+        });
+    }
+
+    public void retaliate (IMoveable targetNPC, JobQueue targetQueue, IAttacking attackingNPC) {
+        if (this.isChargingForAttack) {
+            if (currentTime == 0) {
+                currentTime = Time.time;
+            } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
+                currentTime = 0.0f;
+                this.isChargingForAttack = false;
+            } else {}
+        } else {
+            Debug.Log("Retaliate!");
+            this.isChargingForAttack = true;
+        }
     }
 }

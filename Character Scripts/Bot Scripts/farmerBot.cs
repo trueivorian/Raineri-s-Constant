@@ -12,9 +12,7 @@ using System;
 public class FarmerBot : Bot, IMoveable {
 
     private FarmerBot farmerBotInstance;
-    private float movementSpeed;
-    private float pauseDuration;
-    private float currentDirection;
+
     // Use this for initialization
     void Awake () {
         if (farmerBotInstance == null) {
@@ -59,30 +57,8 @@ public class FarmerBot : Bot, IMoveable {
         return true;
     }
 
-    public float getPauseDuration () {
-        return this.pauseDuration;
-    }
-
     public override bool isAttackable () {
         throw new NotImplementedException();
-    }
-
-    public void move (float speed, float direction) {
-        Vector2 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
-
-        this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
-    }
-
-    public void move (float direction) {
-        move(movementSpeed, direction);
-    }
-
-    public void stop () {
-        move(0.0f, currentDirection);
-    }
-
-    public float getCurrentDirection () {
-        return currentDirection;
     }
 
 }

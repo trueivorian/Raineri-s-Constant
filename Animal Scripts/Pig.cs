@@ -3,10 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Pig : Animal, IMoveable {
+public class Pig : Animal, IMoveable, IRetaliation {
 
     private Pig pigInstance;
     private bool isDead;
+
+    private IAttacking touchedAggressor;
 
     [SerializeField]
     private GameObject pork;
@@ -15,8 +17,6 @@ public class Pig : Animal, IMoveable {
     void Awake () {
 
         // Initialise Animal Components
-        this.anim = this.GetComponent<Animator>();
-        this.myBody = this.GetComponent<Rigidbody2D>();
         this.gameController = FindObjectOfType<GameController>();
 
         // Initialise pig components
@@ -33,10 +33,9 @@ public class Pig : Animal, IMoveable {
         this.movementSpeed = 5.0f;
         this.currentDirection = Direction.E;
         this.pauseDuration = 2.0f;
-        //this.animalJobQueue.setIsWorking(true);
-
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
+        this.isTouchingAggressor = false;
 
         this.droppedItems = new List<GameObject>();
         this.droppedItems.Add(pork);
@@ -45,31 +44,39 @@ public class Pig : Animal, IMoveable {
     // Update is called once per frame
     void Update () {
 
-        checkDeath();
+        this.checkDeath();
 
-        // TODO: Invoking methods from a queue
-        if (animalJobQueue.isJobless()) {
+        //Retaliation queue
+        if (this.isBeingAttacked()) {
+            //Stop all movements
+            this.animalJobQueue.clear();
+            this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
+
+
+            //Normal wandering movement
+        } else if (animalJobQueue.isJobless()) {
             this.npcBehaviourManager.wander(this.pigInstance, this.animalJobQueue);
         } else {
             this.animalJobQueue.work();
         }
     }
 
-
-    public void checkDeath () {
-        if (this.getHealth().getHealthPoints() <= 0f) {
-            //Debug.Log("Died!");
-            //Vector3 spawnPosition = transform.TransformPoint(gameObject.transform.localPosition);
-            Instantiate(rawPorkObject, this.transform.position, this.transform.rotation);
-
-            //Instantiate(rawPorkObject, new Vector3(gameObject.transform.position.x-2.8f,gameObject.transform.position.y+0.19f,gameObject.transform.position.z), gameObject.transform.rotation);
-            Destroy(gameObject);
-        }
-    }
-
     public Pig getLocalInstance () {
         return this.pigInstance;
     }
+
+    // Currently only allow for one aggressor. 
+    //TODO: Add damage calculation so that the retaliation will be done to the aggressor with highest damage
+    //private void OnTriggerEnter2D (Collider2D target) {
+    //    this.isTouchingAggressor = true;
+    //    GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
+    //    this.touchedAggressor = targetObject.GetComponent<IAttacking>();
+    //}
+
+    //private void OnTriggerExit2D (Collider2D target) {
+    //    this.isTouchingAggressor = false;
+    //    this.touchedAggressor = null;
+    //}
 
     public override void initializeDialogue (List<string> _dialogue) {
         _dialogue.Add("Oink!");
@@ -83,5 +90,14 @@ public class Pig : Animal, IMoveable {
 
     public override bool isAttackable () {
         return true;
+    }
+
+    // Currently it stays permanently true after being attacked once.
+    public bool isBeingAttacked () {
+        if (this.health.getIsReduced()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

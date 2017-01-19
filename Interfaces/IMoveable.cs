@@ -8,4 +8,5 @@ public interface IMoveable {
     void move (float speed, float direction);
     float getCurrentDirection ();
     float getPauseDuration ();
+    Animator getAnimator ();
 }

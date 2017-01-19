@@ -16,6 +16,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     protected float currentDirection;
     protected GameController gameController;
     protected List<GameObject> droppedItems;
+    protected bool isTouchingAggressor;
 
     void Awake () {
 
@@ -58,13 +59,11 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
     // Move the Animal object
     public void move (float speed, float direction) {
         Vector2 moveVector = new Vector2(speed * Mathf.Cos(direction), speed * Mathf.Sin(direction));
-
         this.myBody.velocity = new Vector2(moveVector.x, moveVector.y);
     }
 
     // Move the Animal object
     public void move (float direction) {
-
         move(movementSpeed, direction);
     }
 
