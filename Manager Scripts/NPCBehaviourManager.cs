@@ -29,7 +29,6 @@ public class NPCBehaviourManager {
                 this.isLazing = false;
             } else { }
         } else {
-            Debug.Log("Move");
             //TODO: Implement a better form of movement function
             if (randomVal <= -7.5f) {
                 this.addJobMove(Direction.Dir.N, targetNPC, targetQueue);
@@ -62,7 +61,6 @@ public class NPCBehaviourManager {
                 this.isLazing = false;
             } else { }
         } else {
-            Debug.Log("Move");
             //TODO: Implement a better form of movement function
             var x = direction.x;
             var y = direction.y;
@@ -113,5 +111,10 @@ public class NPCBehaviourManager {
             Debug.Log(attackingNPC.GetComponent<IAttackable>().getHealth().getHealthPoints());
             this.isChargingForAttack = true;
         }
+    }
+
+    public void moveToStartingPosition(IMoveable targetNPC, JobQueue targetQueue, Vector3 startingPos) {
+        Debug.Log("Move to starting pos");
+        //TODO: Move pig back to starting position based on caclulations.
     }
 }

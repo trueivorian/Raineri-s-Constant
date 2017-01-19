@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -16,6 +15,9 @@ public class Pig : Animal {
     private GameObject pork;
 
     private bool clearQueueFlag;
+
+    private Vector3 startingPos;
+    private float designatedRange;
 
     // Use this for initialization
     void Awake () {
@@ -45,6 +47,9 @@ public class Pig : Animal {
         this.droppedItems.Add(pork);
 
         this.clearQueueFlag = false;
+
+        this.startingPos = this.transform.position;
+        this.designatedRange = 4.0f;
     }
 
     // Update is called once per frame
@@ -52,7 +57,11 @@ public class Pig : Animal {
         this.checkDeath();
 
         //Retaliation queue
-        if (this.isBeingAttacked()) {
+        if (this.isOutOfRange()) {
+            this.animalJobQueue.clear();
+            this.npcBehaviourManager.moveToStartingPosition(this, this.animalJobQueue, this.startingPos);
+            this.clearQueueFlag = false;
+        } else if (this.isBeingAttacked()) {
 
             // Check if distance to player is close. If far, then move towards it.
             // Move towards aggressor if aggressor left area.
@@ -74,7 +83,7 @@ public class Pig : Animal {
             }
 
             this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
-            
+
             //Normal wandering movement
         } else if (animalJobQueue.isJobless()) {
             this.npcBehaviourManager.wander(this.pigInstance, this.animalJobQueue);
@@ -118,6 +127,16 @@ public class Pig : Animal {
     // Currently it stays permanently true after being attacked once.
     public bool isBeingAttacked () {
         if (this.health.getIsReduced()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private bool isOutOfRange() {
+        var heading = this.transform.position - this.startingPos;
+        var distance = heading.magnitude;
+        if (distance >= this.designatedRange) {
             return true;
         } else {
             return false;
