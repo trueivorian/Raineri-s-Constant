@@ -70,9 +70,10 @@ public class Pig : Animal, IMoveable, IRetaliation {
             if (!clearQueueFlag) {
                 // Stop all movements when first attacked
                 this.animalJobQueue.clear();
+                this.clearQueueFlag = true;
             }
             this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
-
+            
             //Normal wandering movement
         } else if (animalJobQueue.isJobless()) {
             this.npcBehaviourManager.wander(this.pigInstance, this.animalJobQueue);

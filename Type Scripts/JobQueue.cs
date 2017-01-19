@@ -14,7 +14,6 @@ public class JobQueue {
     }
 
     public void work () {
-        //Debug.Log(this.isWorking);
         if (!this.isWorking) {
             this.doJob();
         }
@@ -40,7 +39,7 @@ public class JobQueue {
         if (!this.isJobless()) {
             (jobQueue.Dequeue())();
         } else {
-            Debug.Log("Empty Queue");
+            //Debug.Log("Empty Queue");
         }
     }
 
