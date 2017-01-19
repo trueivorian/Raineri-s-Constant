@@ -19,6 +19,10 @@ public class Pig : Animal {
     private Vector3 startingPos;
     private float designatedRange;
 
+    //Temporary variable for implementation purposes
+    private float currentTime;
+    private float oldHealth;
+
     // Use this for initialization
     void Awake () {
 
@@ -35,6 +39,7 @@ public class Pig : Animal {
         this.animalJobQueue = new JobQueue();
         this.npcBehaviourManager = new NPCBehaviourManager();
 
+        //Implement a .XML or data files for all values in the future
         this.health = new Health(100.0f);
         this.movementSpeed = 5.0f;
         this.currentDirection = Direction.E;
@@ -43,13 +48,13 @@ public class Pig : Animal {
         this.dialogue = new List<string>();
         this.isTouchingAggressor = false;
 
+        this.startingPos = this.transform.position;
+        this.designatedRange = 4.0f;
+
         this.droppedItems = new List<GameObject>();
         this.droppedItems.Add(pork);
 
         this.clearQueueFlag = false;
-
-        this.startingPos = this.transform.position;
-        this.designatedRange = 4.0f;
     }
 
     // Update is called once per frame
@@ -59,9 +64,19 @@ public class Pig : Animal {
         //Retaliation queue
         if (this.isOutOfRange()) {
             this.animalJobQueue.clear();
-            this.npcBehaviourManager.moveToStartingPosition(this, this.animalJobQueue, this.startingPos);
-            this.clearQueueFlag = false;
+            this.lostAggression();
+
         } else if (this.isBeingAttacked()) {
+
+            if (currentTime == 0.0f) {
+                currentTime = Time.time;
+            } else if ((Time.time - currentTime) >= 10.0f) {
+                currentTime = 0.0f;
+                this.lostAggression();
+            } else if (this.oldHealth > this.getHealth().getHealthPoints()) {
+                currentTime = Time.time;
+            }
+            
 
             // Check if distance to player is close. If far, then move towards it.
             // Move towards aggressor if aggressor left area.
@@ -83,6 +98,7 @@ public class Pig : Animal {
             }
 
             this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
+            this.oldHealth = this.getHealth().getHealthPoints();
 
             //Normal wandering movement
         } else if (animalJobQueue.isJobless()) {
@@ -133,7 +149,7 @@ public class Pig : Animal {
         }
     }
 
-    private bool isOutOfRange() {
+    private bool isOutOfRange () {
         var heading = this.transform.position - this.startingPos;
         var distance = heading.magnitude;
         if (distance >= this.designatedRange) {
@@ -141,5 +157,13 @@ public class Pig : Animal {
         } else {
             return false;
         }
+    }
+
+    private void lostAggression() {
+        Debug.Log("Return to original position");
+        //Implement return to original position
+        this.getHealth().setIsReduced(false);
+        this.getHealth().setHealthPoints(100.0f);
+        this.clearQueueFlag = false;
     }
 }

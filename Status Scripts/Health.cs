@@ -16,6 +16,10 @@ public class Health : Status {
 		return healthPoints;
 	}
 
+    public void setHealthPoints(float _healthPoints) {
+        this.healthPoints = _healthPoints;
+    }
+
 	public override void modifyStatus(float change) {
 		healthPoints += change;
         this.isReduced = true;
@@ -25,5 +29,7 @@ public class Health : Status {
         return this.isReduced;
     }
 
-
+    public void setIsReduced(bool condition) {
+        this.isReduced = condition;
+    }
 }

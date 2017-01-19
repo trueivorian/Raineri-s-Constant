@@ -22,7 +22,7 @@ public class NPCBehaviourManager {
         float randomVal = Random.Range(-10.0f, 10.0f);
 
         if (this.isLazing) {
-            if (currentTime == 0) {
+            if (currentTime == 0.0f) {
                 currentTime = Time.time;
             } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
                 currentTime = 0.0f;
@@ -64,7 +64,7 @@ public class NPCBehaviourManager {
             //TODO: Implement a better form of movement function
             var x = direction.x;
             var y = direction.y;
-            var c = 1.61977519f; // tan 45 deg
+            var c = 0.414213562; // tan 22.5 deg
 
             if (x >= 0.0f && y <= c * x && y >= -c * x) {
                 this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
@@ -75,7 +75,16 @@ public class NPCBehaviourManager {
             } else if (y < 0.0f && x <= c * -y && x >= -c * -y) {
                 this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
             }
-            this.isLazing = true;
+            //} else if (x >= 0.0f && y >= c * x && y <= x/c) {
+            //    this.addJobMove(Direction.Dir.NE, targetNPC, targetQueue);
+            //} else if (x <= 0.0f && y >= c * -x && y <= -x/c) {
+            //    this.addJobMove(Direction.Dir.NW, targetNPC, targetQueue);
+            //} else if (x >= 0.0f && y <= -c * x && y >= x / -c) {
+            //    this.addJobMove(Direction.Dir.SE, targetNPC, targetQueue);
+            //} else if (x <= 0.0f && y >= c * x && y >= x / c) {
+            //    this.addJobMove(Direction.Dir.SW, targetNPC, targetQueue);
+            //}
+                this.isLazing = true;
         }
     }
 
