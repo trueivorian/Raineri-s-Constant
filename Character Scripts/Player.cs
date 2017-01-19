@@ -44,7 +44,8 @@ public class Player : Character {
         // This determines the direction the player faces
         chooseDirection();
 
-        if (isTouchingNPC) {
+        // Let touchedNPC be pig for now since there is some issue with NPC not being a pig
+        if (isTouchingNPC && touchedNPC != null && touchedNPC.tag == "Pig") {
             if (Input.GetKeyDown(KeyCode.X)) {
                 if (touchedNPC.GetComponent<IInteractive>().isInteractable()) {
                     this.examine(this.touchedNPC.GetComponent<IInteractive>());
