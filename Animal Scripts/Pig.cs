@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Pig : Animal, IMoveable, IRetaliation {
+public class Pig : Animal {
 
     private Pig pigInstance;
     private bool isDead;
@@ -72,6 +72,7 @@ public class Pig : Animal, IMoveable, IRetaliation {
                 this.animalJobQueue.clear();
                 this.clearQueueFlag = true;
             }
+
             this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
             
             //Normal wandering movement

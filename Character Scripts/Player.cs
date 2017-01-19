@@ -25,6 +25,7 @@ public class Player : Character {
         this.inventory = new Inventory();
 
         // Initialise player components
+        this.health = new Health(1000.0f);
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
         this.currentDirection = Direction.E;
@@ -129,16 +130,5 @@ public class Player : Character {
 
     public override bool isAttackable () {
         return true;
-    }
-
-    public void attack (IAttackable victim) {
-        DamageManager damageManager;
-        if (GameManager.getDamageManager() != null) {
-            damageManager = GameManager.getDamageManager();
-        } else {
-            damageManager = new DamageManager();
-            GameManager.setDamageManager(damageManager);
-        }
-        damageManager.callAttack(this, victim);
     }
 }

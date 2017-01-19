@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveable {
+public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveable, IAttacking {
 
     protected Rigidbody2D myBody;
     protected Animator anim;

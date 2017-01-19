@@ -1,12 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
-/// <summary>
-/// Creates wandering behaviour for a CharacterController.
-/// Obtained from http://wiki.unity3d.com/index.php?title=Wander
-/// </summary>
-
 public class NPCBehaviourManager {
     //This will be used to implement bot behaviour similar to human behaviour.
     private bool isLazing;
@@ -66,26 +60,30 @@ public class NPCBehaviourManager {
             } else if ((Time.time - currentTime) >= targetNPC.getPauseDuration()) {
                 currentTime = 0.0f;
                 this.isLazing = false;
+                if (!this.isLazing) {
+                    targetQueue.setQueueLock(false);
+                }
             } else { }
         } else {
             Debug.Log("Move");
             //TODO: Implement a better form of movement function
+            var x = direction.x;
+            var y = direction.y;
+            var c = 1.61977519f; // tan 45 deg
 
-            //public const float N = 0.663225f,
-            //NE = 0.331613f,
-            //E = 0.0f,
-            //SE = 0.663225f + Mathf.PI + 0.331613f,
-            //S = 0.663225f + Mathf.PI,
-            //SW = 0.663225f + Mathf.PI - 0.331613f,
-            //W = Mathf.PI,
-            //NW = 0.663225f + 0.331613f;
-
-            if (direction.x >= 0.0f) {
+            if (x >= 0.0f && y <= c * x && y >= -c * x) {
                 this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
-            } 
-            // Add code over here
-
+            } else if (x < 0.0f && y <= c * -x && y >= -c * -x) {
+                this.addJobMove(Direction.Dir.W, targetNPC, targetQueue);
+            } else if (y >= 0.0f && x <= c * y && x >= -c * y) {
+                this.addJobMove(Direction.Dir.N, targetNPC, targetQueue);
+            } else if (y < 0.0f && x <= c * -y && x >= -c * -y) {
+                this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
+            }
             this.isLazing = true;
+            if (this.isLazing) {
+                targetQueue.setQueueLock(true);
+            }
         }
     }
 
@@ -116,6 +114,9 @@ public class NPCBehaviourManager {
             // If the pig has the wait period over, it will attack
         } else {
             Debug.Log("Retaliate!");
+            GameManager.getDamageManager().callAttack((IAttacking)targetNPC, attackingNPC.GetComponent<IAttackable>());
+            Debug.Log(((IAttackable)targetNPC).getHealth().getHealthPoints());
+            Debug.Log(attackingNPC.GetComponent<IAttackable>().getHealth().getHealthPoints());
             this.isChargingForAttack = true;
         }
     }
