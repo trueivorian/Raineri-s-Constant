@@ -35,7 +35,7 @@ public class NPCBehaviourManager {
                 this.isLazing = false;
             } else {}
         } else {
-            Debug.Log("Move");
+            //Debug.Log("Move");
             //TODO: Implement a better form of movement function
             if (randomVal <= -7.5f) {
                 this.addJobMove(Direction.Dir.N, targetNPC, targetQueue);
