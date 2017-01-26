@@ -22,6 +22,8 @@ public class Pig : Animal {
     //Temporary variable for implementation purposes
     private float currentTime;
     private float oldHealth;
+    private int attackCounter;
+    private int prevAttackCounter;
 
     // Use this for initialization
     void Awake () {
@@ -55,6 +57,8 @@ public class Pig : Animal {
         this.droppedItems.Add(pork);
 
         this.clearQueueFlag = false;
+        this.attackCounter = 0;
+        this.prevAttackCounter = 0;
     }
 
     // Update is called once per frame
@@ -70,11 +74,13 @@ public class Pig : Animal {
 
             if (currentTime == 0.0f) {
                 currentTime = Time.time;
+            } else if (this.oldHealth > this.getHealth().getHealthPoints() || attackCounter > prevAttackCounter) {
+                Debug.Log("Attack counter vs prevAttackCounter " + attackCounter + " " + prevAttackCounter);
+                currentTime = 0.0f;
             } else if ((Time.time - currentTime) >= 10.0f) {
                 currentTime = 0.0f;
+                Debug.Log("Time aggression lost");
                 this.lostAggression();
-            } else if (this.oldHealth > this.getHealth().getHealthPoints()) {
-                currentTime = Time.time;
             }
             
 
@@ -97,8 +103,10 @@ public class Pig : Animal {
                 this.clearQueueFlag = true;
             }
 
+            this.prevAttackCounter = this.attackCounter;
             this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
             this.oldHealth = this.getHealth().getHealthPoints();
+
 
             //Normal wandering movement
         } else if (animalJobQueue.isJobless()) {
@@ -159,11 +167,21 @@ public class Pig : Animal {
         }
     }
 
+    public void incAttackCounter(int count) {
+        this.attackCounter += count;
+        Debug.Log("Attack counter is : " + attackCounter);
+    }
+
     private void lostAggression() {
         Debug.Log("Return to original position");
         //Implement return to original position
+        //Temporary implementation
+        GameObject pigObject = GameObject.FindGameObjectWithTag("Pig");
+        npcBehaviourManager.moveToStartingPosition(pigObject, this.animalJobQueue, this.startingPos);
+        // End temporary
         this.getHealth().setIsReduced(false);
         this.getHealth().setHealthPoints(100.0f);
         this.clearQueueFlag = false;
+        this.attackCounter = 0;
     }
 }
