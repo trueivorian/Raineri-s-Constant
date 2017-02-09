@@ -1,28 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MagicalResistance : Status {
+public class MagicalResistance {
     private float magicalResistance;
     private bool isReduced;
 
     public MagicalResistance (float _magicalResistance) {
-        this.magicalResistance= _magicalResistance;
+        this.magicalResistance = _magicalResistance;
         this.isReduced = false;
     }
 
-    public void setMagicalResisntace(float _magicalResistance) {
+    public void setMagicalResisntace (float _magicalResistance) {
         this.magicalResistance = _magicalResistance;
     }
 
-    public override void modifyStatus (float difference) {
+    public void modifyStatus (float difference) {
         this.magicalResistance += difference;
     }
 
-    public override bool getIsReduced () {
+    public bool getIsReduced () {
         return this.isReduced;
     }
 
-    public override void setIsReduced (bool condition) {
+    public void setIsReduced (bool condition) {
         this.isReduced = condition;
     }
 }

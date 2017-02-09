@@ -6,7 +6,7 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttack
 
 	protected Rigidbody2D myBody;
 	protected Animator anim;
-	protected Health health;
+    protected Status status;
 	protected Inventory inventory;
     protected Attribute attribute;
     protected float movementSpeed;
@@ -23,12 +23,16 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttack
 
 	}
 		
-	public Health getHealth() {
-		return health;
+	public Status getStatus() {
+		return this.status;
 	}
 
+    public Health getHealth() {
+        return this.status.health;
+    }
+
     public Attribute getAttribute() {
-        return attribute;
+        return this.attribute;
     }
 
 	public void attack (IAttackable victim){

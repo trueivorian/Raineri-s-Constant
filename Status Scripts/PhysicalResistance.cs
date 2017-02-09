@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PhyiscalResistance : Status {
+public class PhyiscalResistance {
     private float physicalResistance;
     private bool isReduced;
 
@@ -10,19 +10,19 @@ public class PhyiscalResistance : Status {
         this.isReduced = false;
     }
 
-    public void setPhysicalResistance(float _physicalResistance) {
+    public void setPhysicalResistance (float _physicalResistance) {
         this.physicalResistance = _physicalResistance;
     }
 
-    public override void modifyStatus (float difference) {
+    public void modifyStatus (float difference) {
         this.physicalResistance += difference;
     }
 
-    public override bool getIsReduced () {
+    public bool getIsReduced () {
         return this.isReduced;
     }
 
-    public override void setIsReduced (bool condition) {
+    public void setIsReduced (bool condition) {
         this.isReduced = condition;
     }
 }

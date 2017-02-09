@@ -4,18 +4,27 @@ using System.Collections.Generic;
 
 public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveable, IAttacking {
 
+    // Unity components
     protected Rigidbody2D myBody;
     protected Animator anim;
-    protected Health health;
-    protected JobQueue animalJobQueue;
-    protected string description;
-    protected List<string> dialogue;
-    protected NPCBehaviourManager npcBehaviourManager;
+
+    // Animal variables
+    protected Status status;
     protected float pauseDuration;
     protected float movementSpeed;
     protected float currentDirection;
-    protected GameController gameController;
     protected List<GameObject> droppedItems;
+
+    // Dialogues
+    protected string description;
+    protected List<string> dialogue;
+
+    // Hidden components
+    protected JobQueue animalJobQueue;
+    protected NPCBehaviourManager npcBehaviourManager;
+    protected GameController gameController;
+
+    // Temporary variables
     protected bool isTouchingAggressor;
 
     void Awake () {
@@ -23,8 +32,12 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
 
     }
 
+    public Status getStatus() {
+        return this.status;
+    }
+
     public Health getHealth () {
-        return health;
+        return this.status.health;
     }
 
     public void attack (IAttackable victim) {

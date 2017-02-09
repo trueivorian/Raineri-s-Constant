@@ -1,4 +1,11 @@
-﻿using UnityEngine;
+﻿/**
+ * Player
+ *
+ * Defines the statuses, attributes and unity components for players. Currently, there are many temporary variables 
+ * included.
+**/
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -19,18 +26,18 @@ public class Player : Character {
             instance = this;
         }
 
-        //Initialise Character Components
+        // Unity components
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
-        this.inventory = new Inventory();
 
-        // Initialise player components
-        this.health = new Health(1000.0f);
-        this.anim = this.GetComponent<Animator>();
-        this.myBody = this.GetComponent<Rigidbody2D>();
-        this.currentDirection = Direction.E;
+        // Player variables
+        this.status = new Status(1000.0f);
+        this.attribute = new Attribute(10, 10, 10, 10);
         this.movementSpeed = 3.5f;
+        this.inventory = new Inventory();
+        this.currentDirection = Direction.E;
 
+        // Temp variables
         this.isTouchingNPC = false;
 
         //		for (int i = 0; i < this.inventory.getNumIcons(); i++) {
@@ -113,6 +120,14 @@ public class Player : Character {
             this.inventory.addInventoryItem(target.GetComponent<Item>());
             target.gameObject.SetActive(false);
             Debug.Log("Item Added to Inventory");
+        }
+    }
+
+    private void OnTriggerStay2D (Collider2D target) {
+        if (target.gameObject.CompareTag("Pig")) {
+            this.isTouchingNPC = true;
+            GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
+            this.touchedNPC = targetObject;
         }
     }
 

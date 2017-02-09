@@ -64,8 +64,9 @@ public class NPCBehaviourManager {
             //TODO: Implement a better form of movement function
             var x = direction.x;
             var y = direction.y;
-            var c = 0.414213562f; // tan 22.5 deg
-            var t = 2.41421356237f;
+            //var c = 0.414213562f; // tan 22.5 deg
+            var c = 1.00f; //tag 45deg
+            //var t = 2.41421356237f;
 
             if (x >= 0.0f && y <= c * x && y >= -c * x) {
                 this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
@@ -75,7 +76,9 @@ public class NPCBehaviourManager {
                 this.addJobMove(Direction.Dir.N, targetNPC, targetQueue);
             } else if (y < 0.0f && x <= c * -y && x >= -c * -y) {
                 this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
-            } else if (x > 0.0f && y < t * x && y > c * x) {
+            } 
+            /*
+            else if (x > 0.0f && y < t * x && y > c * x) {
                 Debug.Log("Move Northeast");
                 this.addJobMove(Direction.Dir.NE, targetNPC, targetQueue);
             } else if (x < 0.0f && y <= t * -x && y > c * -x) {
@@ -88,6 +91,7 @@ public class NPCBehaviourManager {
                 Debug.Log("Move Southeast");
                 this.addJobMove(Direction.Dir.SE, targetNPC, targetQueue);
             }
+            */
             this.isLazing = true;
         }
     }

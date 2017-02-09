@@ -1,44 +1,22 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/**
+ * Attribute
+ *
+ * Storing other detailed attributes within this class will make things neater. Attributes will be used to determine
+ * other statuses like physical resistance and magical resistance.
+ * 
+**/
 
-public class Attribute : MonoBehaviour {
-    public enum attr { DEX, INT, STR, VIT }
+public class Attribute{
+    private Dexterity dexterity;
+    private Intelligence intelligence;
+    private Strength strength;
+    private Vitality vitality;
 
-    private float dexterity;
-    private float intelligence;
-    private float strength;
-    private float vitality;
-
-    public float getAttribute (Attribute.attr _attr) {
-        switch (_attr) {
-            case attr.DEX:
-                return this.dexterity;
-            case attr.INT:
-                return this.intelligence;
-            case attr.VIT:
-                return this.vitality;
-            case attr.STR:
-                return this.strength;
-            default:
-                return 0.0f;
-        }
-    }
-
-    public void modifyAttribute (Attribute.attr _attr, float change) {
-        switch (_attr) {
-            case attr.DEX:
-                this.dexterity += change;
-                break;
-            case attr.INT:
-                this.intelligence += change;
-                break;
-            case attr.VIT:
-                this.vitality += change;
-                break;
-            case attr.STR:
-                this.strength += change;
-                break;
-        }
+    public Attribute(float _dex, float _int, float _str, float _vit) {
+        this.dexterity = new Dexterity(_dex);
+        this.intelligence = new Intelligence(_int);
+        this.strength = new Strength(_str);
+        this.vitality = new Vitality(_vit);
     }
 
 }

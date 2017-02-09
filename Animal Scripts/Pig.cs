@@ -36,26 +36,30 @@ public class Pig : Animal {
             pigInstance = this;
         }
 
+        // Unity components
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
-        this.animalJobQueue = new JobQueue();
-        this.npcBehaviourManager = new NPCBehaviourManager();
 
-        //Implement a .XML or data files for all values in the future
-        this.health = new Health(100.0f);
+        // Pig variables
+        this.status = new Status(100.0f);
         this.movementSpeed = 5.0f;
         this.currentDirection = Direction.E;
         this.pauseDuration = 2.0f;
+        this.droppedItems = new List<GameObject>();
+        this.droppedItems.Add(pork);
+        this.startingPos = this.transform.position;
+        this.designatedRange = 4.0f;
+
+        // Diaglogues
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
         this.isTouchingAggressor = false;
 
-        this.startingPos = this.transform.position;
-        this.designatedRange = 4.0f;
+        // Hidden components
+        this.animalJobQueue = new JobQueue();
+        this.npcBehaviourManager = new NPCBehaviourManager();
 
-        this.droppedItems = new List<GameObject>();
-        this.droppedItems.Add(pork);
-
+        // Temporary variables
         this.clearQueueFlag = false;
         this.attackCounter = 0;
         this.prevAttackCounter = 0;
@@ -82,7 +86,7 @@ public class Pig : Animal {
                 Debug.Log("Time aggression lost");
                 this.lostAggression();
             }
-            
+
 
             // Check if distance to player is close. If far, then move towards it.
             // Move towards aggressor if aggressor left area.
@@ -123,17 +127,14 @@ public class Pig : Animal {
     // Currently only allow for one aggressor. 
     //TODO: Add damage calculation so that the retaliation will be done to the aggressor with highest damage
     private void OnTriggerEnter2D (Collider2D target) {
-        this.isTouchingAggressor = true;
-        GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
         //this.touchedAggressor = targetObject.GetComponent<MonoBehaviour>();
-        Debug.Log(targetObject is IAttacking);
-        Debug.Log(targetObject + " for pig ");
-        if (targetObject is IAttacking) {            
-            this.touchedAggressor = targetObject;
-        } else {
+        Debug.Log("XXXXXXXXXXX" + target);
+        if (target.gameObject.CompareTag("Player")) {
+            this.isTouchingAggressor = true;
+            GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
             this.touchedAggressor = targetObject;
         }
-        
+
     }
 
     private void OnTriggerExit2D (Collider2D target) {
@@ -157,7 +158,7 @@ public class Pig : Animal {
 
     // Currently it stays permanently true after being attacked once.
     public bool isBeingAttacked () {
-        if (this.health.getIsReduced()) {
+        if (this.status.health.getIsReduced()) {
             return true;
         } else {
             return false;
@@ -174,12 +175,12 @@ public class Pig : Animal {
         }
     }
 
-    public void incAttackCounter(int count) {
+    public void incAttackCounter (int count) {
         this.attackCounter += count;
         Debug.Log("Attack counter is : " + attackCounter);
     }
 
-    private void lostAggression() {
+    private void lostAggression () {
         Debug.Log("Return to original position");
         //Implement return to original position
         //Temporary implementation
