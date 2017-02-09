@@ -108,7 +108,7 @@ public class Player : Character {
         this.isTouchingNPC = true;
         GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
         this.touchedNPC = targetObject;
-
+        Debug.Log(targetObject);
 		if (target.tag == "DroppedItem") {
             this.inventory.addInventoryItem(target.GetComponent<Item>());
             target.gameObject.SetActive(false);

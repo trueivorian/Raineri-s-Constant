@@ -8,6 +8,7 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttack
 	protected Animator anim;
 	protected Health health;
 	protected Inventory inventory;
+    protected Attribute attribute;
     protected float movementSpeed;
     protected float currentDirection;
     protected float pauseDuration;
@@ -25,6 +26,10 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttack
 	public Health getHealth() {
 		return health;
 	}
+
+    public Attribute getAttribute() {
+        return attribute;
+    }
 
 	public void attack (IAttackable victim){
         DamageManager damageManager;

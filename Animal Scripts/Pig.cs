@@ -126,7 +126,14 @@ public class Pig : Animal {
         this.isTouchingAggressor = true;
         GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
         //this.touchedAggressor = targetObject.GetComponent<MonoBehaviour>();
-        this.touchedAggressor = targetObject;
+        Debug.Log(targetObject is IAttacking);
+        Debug.Log(targetObject + " for pig ");
+        if (targetObject is IAttacking) {            
+            this.touchedAggressor = targetObject;
+        } else {
+            this.touchedAggressor = targetObject;
+        }
+        
     }
 
     private void OnTriggerExit2D (Collider2D target) {

@@ -25,11 +25,11 @@ public class Health : Status {
         this.isReduced = true;
 	}
 
-    public bool getIsReduced() {
+    public override bool getIsReduced () {
         return this.isReduced;
     }
 
-    public void setIsReduced(bool condition) {
+    public override void setIsReduced (bool condition) {
         this.isReduced = condition;
     }
 }
