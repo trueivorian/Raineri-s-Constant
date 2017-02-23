@@ -41,7 +41,7 @@ public class Pig : Animal {
         this.myBody = this.GetComponent<Rigidbody2D>();
 
         // Pig variables
-        this.status = new Status(100.0f);
+        this.status = new Status(100.0f, 1000.0f, 1000.0f);
         this.movementSpeed = 5.0f;
         this.currentDirection = Direction.E;
         this.pauseDuration = 2.0f;
@@ -63,6 +63,7 @@ public class Pig : Animal {
         this.clearQueueFlag = false;
         this.attackCounter = 0;
         this.prevAttackCounter = 0;
+        this.attack_type = A_TYPE.PHYSICAL;
     }
 
     // Update is called once per frame

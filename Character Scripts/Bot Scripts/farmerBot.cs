@@ -23,7 +23,7 @@ public class FarmerBot : Bot, IMoveable {
         this.myBody = this.GetComponent<Rigidbody2D>();
 
         // Bot variables
-        this.status = new Status(1000.0f);
+        this.status = new Status(1000.0f, 5000.0f, 5000.0f);
         this.attribute = new Attribute(10, 10, 10, 10);
         this.movementSpeed = 3.5f;
         this.pauseDuration = 2.0f;

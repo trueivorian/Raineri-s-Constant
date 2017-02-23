@@ -12,7 +12,9 @@ public class Status {
     public PhyiscalResistance phyiscalResistance;
     public MagicalResistance magicalResistance;
 
-    public Status(float _hea) {
+    public Status(float _hea, float _phyR, float _magR) {
         this.health = new Health(_hea);
+        this.phyiscalResistance = new PhyiscalResistance(_phyR);
+        this.magicalResistance = new MagicalResistance(_magR);
     }
 }

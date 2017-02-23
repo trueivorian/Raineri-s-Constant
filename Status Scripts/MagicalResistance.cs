@@ -25,4 +25,8 @@ public class MagicalResistance {
     public void setIsReduced (bool condition) {
         this.isReduced = condition;
     }
+
+    public float getValue () {
+        return this.magicalResistance;
+    }
 }

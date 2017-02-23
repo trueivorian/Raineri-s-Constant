@@ -31,7 +31,7 @@ public class Player : Character {
         this.myBody = this.GetComponent<Rigidbody2D>();
 
         // Player variables
-        this.status = new Status(1000.0f);
+        this.status = new Status(1000.0f, 5000.0f, 5000.0f);
         this.attribute = new Attribute(10, 10, 10, 10);
         this.movementSpeed = 3.5f;
         this.inventory = new Inventory();
@@ -39,7 +39,7 @@ public class Player : Character {
 
         // Temp variables
         this.isTouchingNPC = false;
-
+        this.attack_type = A_TYPE.PHYSICAL;
         //		for (int i = 0; i < this.inventory.getNumIcons(); i++) {
         //			this.inventory.addInventoryItem (this.inventory [i]);
         //		}

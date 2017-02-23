@@ -14,6 +14,9 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttack
     protected float pauseDuration;
     //protected List<Item> inventory;
 
+    //Temporary variable
+    protected A_TYPE attack_type;
+
     void Awake () {
 
     }
@@ -21,6 +24,10 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttack
     // Update is called once per frame
     void Update () {
 
+    }
+
+    public A_TYPE getAttackType () {
+        return this.attack_type;
     }
 
     public Status getStatus () {

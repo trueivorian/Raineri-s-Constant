@@ -26,6 +26,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
 
     // Temporary variables
     protected bool isTouchingAggressor;
+    protected A_TYPE attack_type;
 
     void Awake () {
 
@@ -34,6 +35,10 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
 
     public Status getStatus() {
         return this.status;
+    }
+
+    public A_TYPE getAttackType() {
+        return this.attack_type;
     }
 
     public void attack (IAttackable victim) {
