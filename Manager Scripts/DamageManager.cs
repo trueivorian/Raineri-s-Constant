@@ -23,9 +23,12 @@ public class DamageManager {
             case A_TYPE.PHYSICAL:
                 float phyR = target.getStatus().phyiscalResistance.getValue();
                 //finalDamage = attackingPower - physicalResistance*scale;
-                float randomValue = Random.RandomRange(10.0f, 30.0f);
-                int evasionValue = int.TryParse(Random.RandomRange(0.0f, 1.0f));
-                finalDamage = randomValue - phyR / 1596;
+                float randomValue = Random.Range(10.0f, 30.0f);
+                Debug.Log(randomValue);
+                int evasionValue = (int) Random.Range(0.0f, 1.0f);
+                Debug.Log("EV: " + evasionValue);
+                finalDamage = evasionValue * (randomValue - phyR / 1596);
+                Debug.Log("FD: "  + finalDamage);
                 break;
         }
         return -finalDamage;
