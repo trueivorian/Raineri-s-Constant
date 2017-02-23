@@ -19,15 +19,22 @@ public class FarmerBot : Bot, IMoveable {
             farmerBotInstance = this;
         }
 
+        // Unity components
         this.myBody = this.GetComponent<Rigidbody2D>();
-        this.health = new Health(100.0f);
+
+        // Bot variables
+        this.status = new Status(1000.0f, 5000.0f, 5000.0f);
+        this.attribute = new Attribute(10, 10, 10, 10);
+        this.movementSpeed = 3.5f;
+        this.pauseDuration = 2.0f;
+        this.currentDirection = Direction.E;
+
         //TODO: Add some better description for the bot.
         this.description = "This is a farmer.";
         this.dialogue = new List<string>();
         this.initializeDialogue(dialogue);
-        this.movementSpeed = 5.0f;
-        this.pauseDuration = 2.0f;
-        this.currentDirection = Direction.E;
+        
+        // Hidden components
         this.botJobQueue = new JobQueue();
         this.npcBehaviourManager = new NPCBehaviourManager();
     }

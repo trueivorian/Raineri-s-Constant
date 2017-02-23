@@ -4,31 +4,45 @@ using System.Collections.Generic;
 
 public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveable, IAttacking {
 
+    // Unity components
     protected Rigidbody2D myBody;
     protected Animator anim;
-    protected Health health;
-    protected JobQueue animalJobQueue;
-    protected string description;
-    protected List<string> dialogue;
-    protected NPCBehaviourManager npcBehaviourManager;
+
+    // Animal variables
+    protected Status status;
     protected float pauseDuration;
     protected float movementSpeed;
     protected float currentDirection;
-    protected GameController gameController;
     protected List<GameObject> droppedItems;
+
+    // Dialogues
+    protected string description;
+    protected List<string> dialogue;
+
+    // Hidden components
+    protected JobQueue animalJobQueue;
+    protected NPCBehaviourManager npcBehaviourManager;
+    protected GameController gameController;
+
+    // Temporary variables
     protected bool isTouchingAggressor;
+    protected A_TYPE attack_type;
 
     void Awake () {
 
 
     }
 
-    public Health getHealth () {
-        return health;
+    public Status getStatus() {
+        return this.status;
+    }
+
+    public A_TYPE getAttackType() {
+        return this.attack_type;
     }
 
     public void attack (IAttackable victim) {
-        victim.getHealth().modifyStatus(30.0f);
+        victim.getStatus().health.modifyStatus(30.0f);
     }
 
     public float calculateDamage () {
@@ -75,7 +89,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
         return currentDirection;
     }
     public void checkDeath () {
-        if (this.getHealth().getHealthPoints() <= 0f) {
+        if (this.getStatus().health.getHealthPoints() <= 0f) {
 
             if (droppedItems.Count != 0) {
 

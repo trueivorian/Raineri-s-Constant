@@ -22,6 +22,8 @@ public class Pig : Animal {
     //Temporary variable for implementation purposes
     private float currentTime;
     private float oldHealth;
+    private int attackCounter;
+    private int prevAttackCounter;
 
     // Use this for initialization
     void Awake () {
@@ -34,27 +36,34 @@ public class Pig : Animal {
             pigInstance = this;
         }
 
+        // Unity components
         this.anim = this.GetComponent<Animator>();
         this.myBody = this.GetComponent<Rigidbody2D>();
-        this.animalJobQueue = new JobQueue();
-        this.npcBehaviourManager = new NPCBehaviourManager();
 
-        //Implement a .XML or data files for all values in the future
-        this.health = new Health(100.0f);
+        // Pig variables
+        this.status = new Status(100.0f, 1000.0f, 1000.0f);
         this.movementSpeed = 5.0f;
         this.currentDirection = Direction.E;
         this.pauseDuration = 2.0f;
+        this.droppedItems = new List<GameObject>();
+        this.droppedItems.Add(pork);
+        this.startingPos = this.transform.position;
+        this.designatedRange = 4.0f;
+
+        // Diaglogues
         this.description = "This is a pig.";
         this.dialogue = new List<string>();
         this.isTouchingAggressor = false;
 
-        this.startingPos = this.transform.position;
-        this.designatedRange = 4.0f;
+        // Hidden components
+        this.animalJobQueue = new JobQueue();
+        this.npcBehaviourManager = new NPCBehaviourManager();
 
-        this.droppedItems = new List<GameObject>();
-        this.droppedItems.Add(pork);
-
+        // Temporary variables
         this.clearQueueFlag = false;
+        this.attackCounter = 0;
+        this.prevAttackCounter = 0;
+        this.attack_type = A_TYPE.PHYSICAL;
     }
 
     // Update is called once per frame
@@ -70,13 +79,15 @@ public class Pig : Animal {
 
             if (currentTime == 0.0f) {
                 currentTime = Time.time;
+            } else if (this.oldHealth > this.getStatus().health.getHealthPoints() || attackCounter > prevAttackCounter) {
+                Debug.Log("Attack counter vs prevAttackCounter " + attackCounter + " " + prevAttackCounter);
+                currentTime = 0.0f;
             } else if ((Time.time - currentTime) >= 10.0f) {
                 currentTime = 0.0f;
+                Debug.Log("Time aggression lost");
                 this.lostAggression();
-            } else if (this.oldHealth > this.getHealth().getHealthPoints()) {
-                currentTime = Time.time;
             }
-            
+
 
             // Check if distance to player is close. If far, then move towards it.
             // Move towards aggressor if aggressor left area.
@@ -97,8 +108,10 @@ public class Pig : Animal {
                 this.clearQueueFlag = true;
             }
 
+            this.prevAttackCounter = this.attackCounter;
             this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
-            this.oldHealth = this.getHealth().getHealthPoints();
+            this.oldHealth = this.getStatus().health.getHealthPoints();
+
 
             //Normal wandering movement
         } else if (animalJobQueue.isJobless()) {
@@ -115,10 +128,14 @@ public class Pig : Animal {
     // Currently only allow for one aggressor. 
     //TODO: Add damage calculation so that the retaliation will be done to the aggressor with highest damage
     private void OnTriggerEnter2D (Collider2D target) {
-        this.isTouchingAggressor = true;
-        GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
         //this.touchedAggressor = targetObject.GetComponent<MonoBehaviour>();
-        this.touchedAggressor = targetObject;
+        Debug.Log("XXXXXXXXXXX" + target);
+        if (target.gameObject.CompareTag("Player")) {
+            this.isTouchingAggressor = true;
+            GameObject targetObject = GameObject.FindGameObjectWithTag(target.tag);
+            this.touchedAggressor = targetObject;
+        }
+
     }
 
     private void OnTriggerExit2D (Collider2D target) {
@@ -142,7 +159,7 @@ public class Pig : Animal {
 
     // Currently it stays permanently true after being attacked once.
     public bool isBeingAttacked () {
-        if (this.health.getIsReduced()) {
+        if (this.status.health.getIsReduced()) {
             return true;
         } else {
             return false;
@@ -159,11 +176,21 @@ public class Pig : Animal {
         }
     }
 
-    private void lostAggression() {
+    public void incAttackCounter (int count) {
+        this.attackCounter += count;
+        Debug.Log("Attack counter is : " + attackCounter);
+    }
+
+    private void lostAggression () {
         Debug.Log("Return to original position");
         //Implement return to original position
-        this.getHealth().setIsReduced(false);
-        this.getHealth().setHealthPoints(100.0f);
+        //Temporary implementation
+        GameObject pigObject = GameObject.FindGameObjectWithTag("Pig");
+        npcBehaviourManager.moveToStartingPosition(pigObject, this.animalJobQueue, this.startingPos);
+        // End temporary
+        this.getStatus().health.setIsReduced(false);
+        this.getStatus().health.setHealthPoints(100.0f);
         this.clearQueueFlag = false;
+        this.attackCounter = 0;
     }
 }

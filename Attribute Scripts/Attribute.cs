@@ -1,15 +1,22 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿/**
+ * Attribute
+ *
+ * Storing other detailed attributes within this class will make things neater. Attributes will be used to determine
+ * other statuses like physical resistance and magical resistance.
+ * 
+**/
 
-public class Attribute : MonoBehaviour {
+public class Attribute{
+    private Dexterity dexterity;
+    private Intelligence intelligence;
+    private Strength strength;
+    private Vitality vitality;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public Attribute(float _dex, float _int, float _str, float _vit) {
+        this.dexterity = new Dexterity(_dex);
+        this.intelligence = new Intelligence(_int);
+        this.strength = new Strength(_str);
+        this.vitality = new Vitality(_vit);
+    }
+
 }

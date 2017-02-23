@@ -64,7 +64,9 @@ public class NPCBehaviourManager {
             //TODO: Implement a better form of movement function
             var x = direction.x;
             var y = direction.y;
-            var c = 0.414213562; // tan 22.5 deg
+            //var c = 0.414213562f; // tan 22.5 deg
+            var c = 1.00f; //tag 45deg
+            //var t = 2.41421356237f;
 
             if (x >= 0.0f && y <= c * x && y >= -c * x) {
                 this.addJobMove(Direction.Dir.E, targetNPC, targetQueue);
@@ -74,17 +76,23 @@ public class NPCBehaviourManager {
                 this.addJobMove(Direction.Dir.N, targetNPC, targetQueue);
             } else if (y < 0.0f && x <= c * -y && x >= -c * -y) {
                 this.addJobMove(Direction.Dir.S, targetNPC, targetQueue);
+            } 
+            /*
+            else if (x > 0.0f && y < t * x && y > c * x) {
+                Debug.Log("Move Northeast");
+                this.addJobMove(Direction.Dir.NE, targetNPC, targetQueue);
+            } else if (x < 0.0f && y <= t * -x && y > c * -x) {
+                Debug.Log("Move Northwest");
+                this.addJobMove(Direction.Dir.NW, targetNPC, targetQueue);
+            } else if (x < 0 && y < c * x && y > t * x) {
+                Debug.Log("Move Southwest");
+                this.addJobMove(Direction.Dir.SW, targetNPC, targetQueue);
+            } else if (x > 0 && y < c * x && y > c * x) {
+                Debug.Log("Move Southeast");
+                this.addJobMove(Direction.Dir.SE, targetNPC, targetQueue);
             }
-            //} else if (x >= 0.0f && y >= c * x && y <= x/c) {
-            //    this.addJobMove(Direction.Dir.NE, targetNPC, targetQueue);
-            //} else if (x <= 0.0f && y >= c * -x && y <= -x/c) {
-            //    this.addJobMove(Direction.Dir.NW, targetNPC, targetQueue);
-            //} else if (x >= 0.0f && y <= -c * x && y >= x / -c) {
-            //    this.addJobMove(Direction.Dir.SE, targetNPC, targetQueue);
-            //} else if (x <= 0.0f && y >= c * x && y >= x / c) {
-            //    this.addJobMove(Direction.Dir.SW, targetNPC, targetQueue);
-            //}
-                this.isLazing = true;
+            */
+            this.isLazing = true;
         }
     }
 
@@ -116,14 +124,16 @@ public class NPCBehaviourManager {
         } else {
             Debug.Log("Retaliate!");
             GameManager.getDamageManager().callAttack((IAttacking)targetNPC, attackingNPC.GetComponent<IAttackable>());
-            Debug.Log(((IAttackable)targetNPC).getHealth().getHealthPoints());
-            Debug.Log(attackingNPC.GetComponent<IAttackable>().getHealth().getHealthPoints());
+            ((Pig)targetNPC).incAttackCounter(1);
+            Debug.Log(((IAttackable)targetNPC).getStatus().health.getHealthPoints());
+            Debug.Log(attackingNPC.GetComponent<IAttackable>().getStatus().health.getHealthPoints());
             this.isChargingForAttack = true;
         }
     }
 
-    public void moveToStartingPosition(IMoveable targetNPC, JobQueue targetQueue, Vector3 startingPos) {
+    public void moveToStartingPosition (GameObject targetNPC, JobQueue targetQueue, Vector3 startingPos) {
         Debug.Log("Move to starting pos");
+        targetNPC.transform.position = startingPos;
         //TODO: Move pig back to starting position based on caclulations.
     }
 }
