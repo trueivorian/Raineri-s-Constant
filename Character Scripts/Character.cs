@@ -4,38 +4,34 @@ using System.Collections.Generic;
 
 public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttacking {
 
-	protected Rigidbody2D myBody;
-	protected Animator anim;
+    protected Rigidbody2D myBody;
+    protected Animator anim;
     protected Status status;
-	protected Inventory inventory;
+    protected Inventory inventory;
     protected Attribute attribute;
     protected float movementSpeed;
     protected float currentDirection;
     protected float pauseDuration;
     //protected List<Item> inventory;
 
-    void Awake() {
-		
-	}
+    void Awake () {
 
-	// Update is called once per frame
-	void Update () {
-
-	}
-		
-	public Status getStatus() {
-		return this.status;
-	}
-
-    public Health getHealth() {
-        return this.status.health;
     }
 
-    public Attribute getAttribute() {
+    // Update is called once per frame
+    void Update () {
+
+    }
+
+    public Status getStatus () {
+        return this.status;
+    }
+
+    public Attribute getAttribute () {
         return this.attribute;
     }
 
-	public void attack (IAttackable victim){
+    public void attack (IAttackable victim) {
         DamageManager damageManager;
         if (GameManager.getDamageManager() != null) {
             damageManager = GameManager.getDamageManager();
@@ -44,7 +40,7 @@ public abstract class Character : MonoBehaviour, IAttackable, IMoveable, IAttack
             GameManager.setDamageManager(damageManager);
         }
         damageManager.callAttack(this, victim);
-	}
+    }
 
     //TODO: implement calculateDamage()
     public float calculateDamage () {

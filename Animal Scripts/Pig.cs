@@ -78,7 +78,7 @@ public class Pig : Animal {
 
             if (currentTime == 0.0f) {
                 currentTime = Time.time;
-            } else if (this.oldHealth > this.getHealth().getHealthPoints() || attackCounter > prevAttackCounter) {
+            } else if (this.oldHealth > this.getStatus().health.getHealthPoints() || attackCounter > prevAttackCounter) {
                 Debug.Log("Attack counter vs prevAttackCounter " + attackCounter + " " + prevAttackCounter);
                 currentTime = 0.0f;
             } else if ((Time.time - currentTime) >= 10.0f) {
@@ -109,7 +109,7 @@ public class Pig : Animal {
 
             this.prevAttackCounter = this.attackCounter;
             this.npcBehaviourManager.retaliate(this.pigInstance, this.animalJobQueue, this.touchedAggressor);
-            this.oldHealth = this.getHealth().getHealthPoints();
+            this.oldHealth = this.getStatus().health.getHealthPoints();
 
 
             //Normal wandering movement
@@ -187,8 +187,8 @@ public class Pig : Animal {
         GameObject pigObject = GameObject.FindGameObjectWithTag("Pig");
         npcBehaviourManager.moveToStartingPosition(pigObject, this.animalJobQueue, this.startingPos);
         // End temporary
-        this.getHealth().setIsReduced(false);
-        this.getHealth().setHealthPoints(100.0f);
+        this.getStatus().health.setIsReduced(false);
+        this.getStatus().health.setHealthPoints(100.0f);
         this.clearQueueFlag = false;
         this.attackCounter = 0;
     }

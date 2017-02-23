@@ -60,7 +60,7 @@ public class Player : Character {
             } else if (Input.GetKeyDown(KeyCode.C)) {
                 if (touchedNPC.GetComponent<IAttackable>().isAttackable()) {
                     this.attack(touchedNPC.GetComponent<IAttackable>());
-                    Debug.Log(touchedNPC.GetComponent<IAttackable>().getHealth().getHealthPoints());
+                    Debug.Log(touchedNPC.GetComponent<IAttackable>().getStatus().health.getHealthPoints());
                 }
             }
         }

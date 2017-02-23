@@ -2,7 +2,7 @@
 using System.Collections;
 
 public interface IAttackable {
-    Health getHealth ();
+    Status getStatus ();
     float calculateDamage ();
     bool isAttackable ();
 }

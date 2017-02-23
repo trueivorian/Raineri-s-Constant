@@ -125,8 +125,8 @@ public class NPCBehaviourManager {
             Debug.Log("Retaliate!");
             GameManager.getDamageManager().callAttack((IAttacking)targetNPC, attackingNPC.GetComponent<IAttackable>());
             ((Pig)targetNPC).incAttackCounter(1);
-            Debug.Log(((IAttackable)targetNPC).getHealth().getHealthPoints());
-            Debug.Log(attackingNPC.GetComponent<IAttackable>().getHealth().getHealthPoints());
+            Debug.Log(((IAttackable)targetNPC).getStatus().health.getHealthPoints());
+            Debug.Log(attackingNPC.GetComponent<IAttackable>().getStatus().health.getHealthPoints());
             this.isChargingForAttack = true;
         }
     }

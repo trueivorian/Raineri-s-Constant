@@ -36,12 +36,8 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
         return this.status;
     }
 
-    public Health getHealth () {
-        return this.status.health;
-    }
-
     public void attack (IAttackable victim) {
-        victim.getHealth().modifyStatus(30.0f);
+        victim.getStatus().health.modifyStatus(30.0f);
     }
 
     public float calculateDamage () {
@@ -88,7 +84,7 @@ public abstract class Animal : MonoBehaviour, IAttackable, IInteractive, IMoveab
         return currentDirection;
     }
     public void checkDeath () {
-        if (this.getHealth().getHealthPoints() <= 0f) {
+        if (this.getStatus().health.getHealthPoints() <= 0f) {
 
             if (droppedItems.Count != 0) {
 
